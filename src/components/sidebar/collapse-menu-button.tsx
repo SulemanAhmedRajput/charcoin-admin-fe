@@ -72,7 +72,7 @@ export function CollapseMenuButton({
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center">
               <span className="mr-4">
-                <Icon size={18} />
+                <Icon className="!w-6 !h-6" />
               </span>
               <p
                 className={cn(
@@ -95,7 +95,7 @@ export function CollapseMenuButton({
             >
               <ChevronDown
                 size={18}
-                className="transition-transform duration-200"
+                className="transition-transform duration-200 !w-4 !h-4"
               />
             </div>
           </div>
@@ -145,7 +145,7 @@ export function CollapseMenuButton({
                 <div className="w-full items-center flex justify-between">
                   <div className="flex items-center">
                     <span className={cn(isOpen === false ? "" : "mr-4")}>
-                      <Icon size={18} />
+                      <Icon className="!w-6 !h-6 " />
                     </span>
                     <p
                       className={cn(
