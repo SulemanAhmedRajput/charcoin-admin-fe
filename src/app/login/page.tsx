@@ -1,9 +1,8 @@
-import { ArrowLeft, Twitter } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
 import { AdminLoginForm } from "@/components/form/admin-login-form";
+import { Button } from "@/components/ui/button";
 
 const LoginPage = () => {
   return (
@@ -27,30 +26,7 @@ const LoginPage = () => {
           <hr />
           <AdminLoginForm />
           <hr />
-          {/* <span>
-            By login or joining you agree with our{" "}
-            <Link className="text-primary hover:underline" href={"/"}>
-              Privacy Policies
-            </Link>
-            ,{" "}
-            <Link className="text-primary hover:underline" href={"/"}>
-              GDPR and Terms and Conditions
-            </Link>{" "}
-            .
-          </span> */}
         </div>
-        {/* <div className="flex gap-4  flex-col">
-          <hr />
-          <div className="flex justify-between px-4 items-center">
-            <span className="text-slate text-sm">
-              Follow only the official channels
-            </span>
-            <span className="flex gap-4">
-              <Twitter size={24} className=" fill-background" />
-              <Twitter size={24} className=" fill-background" />
-            </span>
-          </div>
-        </div> */}
       </div>
       <div className="max-lg:hidden  w-full">
         {" "}
