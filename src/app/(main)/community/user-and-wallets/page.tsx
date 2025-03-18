@@ -6,6 +6,7 @@ const Community = () => {
       title="Users & Wallets"
       description="Listing all the users/wallets in the CharCoin ecosystem"
     >
+      Hi
     </HeaderWrapper>
   );
 };
