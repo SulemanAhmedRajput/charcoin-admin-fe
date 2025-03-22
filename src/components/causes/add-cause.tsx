@@ -70,7 +70,7 @@ const formSchema = z.object({
   status: z.string().optional(),
 });
 
-export default function ProjectCreationForm() {
+export function AddCauseForm() {
   const [activeTab, setActiveTab] = useState("preview");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 

@@ -28,17 +28,31 @@ export function DataTableColumnHeader<TData, TValue>({
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
+    return (
+      <div
+        className={cn(
+          "flex items-center text-foreground space-x-2 space-y-2 p-2 !px-4",
+          className
+        )}
+      >
+        {title}
+      </div>
+    );
   }
 
   return (
-    <div className={cn("flex items-center space-x-2", className)}>
+    <div
+      className={cn(
+        "flex items-center space-x-2 space-y-2 p-2 !px-4",
+        className
+      )}
+    >
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
             size="sm"
-            className="-ml-3 h-8 data-[state=open]:bg-accent"
+            className="-ml-3 h-8 text-foreground hover:bg-custom-slate data-[state=open]:bg-custom-slate"
           >
             <span>{title}</span>
             {column.getIsSorted() === "desc" ? (

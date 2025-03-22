@@ -1,4 +1,5 @@
 import { SpinnerOne } from "@mynaui/icons-react";
+import { Loader } from "lucide-react";
 import Image from "next/image";
 
 const SplashScreen = () => {
@@ -11,7 +12,7 @@ const SplashScreen = () => {
         width={376}
         height={115}
       />
-      <SpinnerOne className="text-primary w-18 h-18 animate-spin" />
+      <Loader className="text-primary w-4 h-4 animate-spin" />
     </div>
   );
 };

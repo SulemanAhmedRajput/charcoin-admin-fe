@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import * as React from "react";
 
 import {
   Table,
@@ -23,9 +23,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 // import { DataTableToolbar } from "../table/tasks-table-toolbar";
-import { DataTablePagination } from "../table/tasks-table-pagination";
-import { Loader } from "lucide-react";
+import { CustomSheet } from "../reuseable/add-causes-sheet";
 import { Fetching } from "../reuseable/fetching";
+import { DataTablePagination } from "../table/tasks-table-pagination";
+import { AddCauseForm } from "./add-cause";
+import { CauseDetail } from "./cause-detail";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,6 +40,7 @@ export function AddCauseTable<TData, TValue>({
   data,
   fetching,
 }: DataTableProps<TData, TValue>) {
+  const [isAddCauseOpen, setIsAddCauseOpen] = React.useState(false);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -71,7 +74,8 @@ export function AddCauseTable<TData, TValue>({
   return (
     <div className="space-y-4">
       {/* <DataTableToolbar table={table} /> */}
-      <div className="rounded-md border bg-background p-4">
+      <div className="rounded-md border bg-background ">
+        {/* <ScrollArea> */}
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -95,12 +99,16 @@ export function AddCauseTable<TData, TValue>({
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
+                  onClick={() => {
+                    console.log("Clicked");
+                    setIsAddCauseOpen(true);
+                  }}
                   // row.original?._id! ??
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell className="py-4 px-4" key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -130,8 +138,23 @@ export function AddCauseTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+        {/* </ScrollArea> */}
       </div>
       <DataTablePagination table={table} />
+      {/* <CustomSheet
+        isOpen={isAddCauseOpen}
+        setIsOpen={setIsAddCauseOpen}
+        title="Add Cause form"
+      >
+        <AddCauseForm />
+      </CustomSheet> */}
+      <CustomSheet
+        isOpen={isAddCauseOpen}
+        setIsOpen={setIsAddCauseOpen}
+        title="See the Cause Detail"
+      >
+        <CauseDetail />
+      </CustomSheet>
     </div>
   );
 }

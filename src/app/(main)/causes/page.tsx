@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-import { AddCausesSheet } from "@/components/add-causes-sheet";
 import { AddCauseTable } from "@/components/causes/add-cause-table";
 import { runningCauseColumns } from "@/components/columns/running_cause_column";
 import { Input } from "@/components/ui/input";
@@ -168,7 +167,11 @@ export default function CausesPage() {
             </div>
           </div>
           <TabsContent value="running" className="mt-4 ">
-            <AddCauseTable data={data ?? []} columns={runningCauseColumns} fetching={isLoading} />
+            <AddCauseTable
+              data={data ?? []}
+              columns={runningCauseColumns}
+              fetching={isLoading}
+            />
           </TabsContent>
           <TabsContent value="completed">
             <div className="flex justify-center items-center h-40">
@@ -182,103 +185,6 @@ export default function CausesPage() {
           </TabsContent>
         </Tabs>
       </div>
-      <AddCausesSheet
-        isOpen={isSheetOpen}
-        setIsOpen={(value) => setIsSheetOpen(value)}
-      />
     </div>
   );
 }
-
-//  <div className="rounded-md border bg-background">
-//    <div className="overflow-x-auto">
-//      <table className="w-full">
-//        <thead className="border-b">
-//          {table.getHeaderGroups().map((headerGroup) => (
-//            <tr key={headerGroup.id}>
-//              {headerGroup.headers.map((header) => (
-//                <th
-//                  key={header.id}
-//                  className="px-4 py-3 text-left text-sm font-medium text-muted-foreground"
-//                >
-//                  {header.isPlaceholder
-//                    ? null
-//                    : flexRender(
-//                        header.column.columnDef.header,
-//                        header.getContext()
-//                      )}
-//                </th>
-//              ))}
-//            </tr>
-//          ))}
-//        </thead>
-//        <tbody>
-//          {isLoading ? (
-//            <tr>
-//              <td colSpan={columns.length} className="py-6 text-center">
-//                <Loader className="w-4 h-4 animate-spin mx-auto " />
-//              </td>
-//            </tr>
-//          ) : table.getRowModel().rows.length === 0 ? (
-//            <tr>
-//              <td colSpan={columns.length} className="py-6 text-center">
-//                No results found
-//              </td>
-//            </tr>
-//          ) : (
-//            table.getRowModel().rows.map((row) => (
-//              <tr
-//                key={row.id}
-//                className="border-b bg-background hover:bg-muted/50 cursor-pointer"
-//                onClick={() => {
-//                  setSelectedRow(row);
-//                  setIsSheetOpen(true);
-//                }}
-//              >
-//                {row.getVisibleCells().map((cell) => (
-//                  <td key={cell.id} className="px-4 py-4 text-sm">
-//                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-//                  </td>
-//                ))}
-//              </tr>
-//            ))
-//          )}
-//        </tbody>
-//      </table>
-//    </div>
-
-//    {/* Pagination */}
-//    <div className="flex items-center justify-between px-4 py-4">
-//      <div className="text-sm text-muted-foreground">
-//        Showing{" "}
-//        {table.getState().pagination.pageIndex *
-//          table.getState().pagination.pageSize +
-//          1}{" "}
-//        to{" "}
-//        {Math.min(
-//          (table.getState().pagination.pageIndex + 1) *
-//            table.getState().pagination.pageSize,
-//          data.length
-//        )}{" "}
-//        of {data.length} entries
-//      </div>
-//      <div className="flex items-center space-x-2">
-//        <Button
-//          variant="outline"
-//          size="sm"
-//          onClick={() => table.previousPage()}
-//          disabled={!table.getCanPreviousPage()}
-//        >
-//          Previous
-//        </Button>
-//        <Button
-//          variant="outline"
-//          size="sm"
-//          onClick={() => table.nextPage()}
-//          disabled={!table.getCanNextPage()}
-//        >
-//          Next
-//        </Button>
-//      </div>
-//    </div>
-//  </div>;
