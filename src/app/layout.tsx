@@ -7,6 +7,8 @@ import { SplashScreen } from "@/components/splash/screen";
 import ProgressProvider from "@/components/custom/progress-provider";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryProvider } from "@/providers/query-provider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -127,16 +129,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${wfVisualSans.className} antialiased`}
       >
         <Suspense fallback={<SplashScreen />}>
-          <ProgressProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </ProgressProvider>
+          <QueryProvider>
+            <ProgressProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </ProgressProvider>
+          </QueryProvider>
           <Toaster />
         </Suspense>
       </body>

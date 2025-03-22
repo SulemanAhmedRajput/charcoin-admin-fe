@@ -57,13 +57,13 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold ">Dashboard</h1>
         <DateSelector date={date} setDate={setDate} />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-4">
         <StatisticsChart
           title="Donations Statistics"
           data={fakeData}
           tabs={["Monthly", "Yearly"]}
         />
-        <div className="grid grid-rows-2 gap-8">
+        <div className="grid grid-rows-2  gap-8">
           <div className="!h-full">
             <div className="grid !h-full  grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] gap-8">
               <div className="bg-background  text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] ">
@@ -93,7 +93,7 @@ const Dashboard = () => {
 
                 <span className="space-y-2">
                   {" "}
-                  <div className="text-3xl flex text-primary justify-center items-center">
+                  <div className="text-3xl flex text-primary justify-center whitespace-nowrap items-center">
                     $ 260,000.00
                   </div>
                   <p className="text-custom-light_text text-xs">
@@ -132,7 +132,7 @@ const Dashboard = () => {
 
                 <span className="space-y-2">
                   {" "}
-                  <div className="text-3xl flex text-primary justify-center items-center">
+                  <div className="text-3xl flex text-primary whitespace-nowrap justify-center items-center">
                     $ 260,000.00
                   </div>
                   <p className="text-custom-light_text text-xs">
@@ -145,7 +145,7 @@ const Dashboard = () => {
         </div>
       </div>
       <hr className="min-h-[2px]  w-[calc(100%-24px)] ml-[12px] bg-slate/60  " />
-      <div className="bg-background px-5  rounded-xl  grid grid-cols-[1fr,_2px,_1fr]   gap-4 ">
+      <div className="bg-background px-5  rounded-xl  grid grid-cols-[1fr,_2px,_1fr] max-xl:grid-cols-1   gap-4 ">
         <StatisticsChart
           title="Staking Statistics"
           data={stakingData}
@@ -190,7 +190,7 @@ const Dashboard = () => {
 
       <hr className="min-h-[2px]  w-[calc(100%-24px)] ml-[12px] bg-slate/60  " />
 
-      <div className="bg-background px-5  rounded-xl  grid grid-cols-[1fr,_2px,_1fr]   gap-4 ">
+      <div className="bg-background px-5  rounded-xl  grid grid-cols-[1fr,_2px,_1fr] max-xl:grid-cols-1  gap-4 ">
         <StatisticsChart
           title="Rewards Statistics"
           data={rewardsData}
@@ -198,7 +198,7 @@ const Dashboard = () => {
           containerClassName="h-[200px] w-full"
         />
         <hr className="min-w-[2px] h-full bg-custom-slate" />
-        <div className="grid h-max my-auto grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] gap-8">
+        <div className="grid h-max my-auto grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))]  gap-8">
           <div className="bg-background text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] ">
             <span className="space-y-2">
               {" "}
