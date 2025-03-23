@@ -8,7 +8,6 @@ import localFont from "next/font/local";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
-import { ScrollArea } from "@/components/ui/scroll-area";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -128,10 +127,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${wfVisualSans.className} antialiased`}
       >
-        {/* <ScrollArea className="max-h-screen h-screen min-w-screen w-screen overflow-auto  whitespace-nowrap"> */}
+        {/* <ScrollArea className="max-h-screen  h-screen min-w-screen w-screen overflow-auto  whitespace-nowrap"> */}
         <Suspense fallback={<SplashScreen />}>
-          <QueryProvider>
-            <ProgressProvider>
+          <ProgressProvider>
+            <QueryProvider>
               <ThemeProvider
                 attribute="class"
                 defaultTheme="dark"
@@ -140,9 +139,9 @@ export default function RootLayout({
               >
                 {children}
               </ThemeProvider>
-            </ProgressProvider>
-          </QueryProvider>
-          <Toaster />
+            </QueryProvider>
+            <Toaster />
+          </ProgressProvider>
         </Suspense>
         {/* </ScrollArea> */}
       </body>

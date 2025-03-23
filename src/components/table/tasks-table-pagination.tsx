@@ -22,14 +22,22 @@ interface DataTablePaginationProps<TData> {
 export function DataTablePagination<TData>({
   table,
 }: DataTablePaginationProps<TData>) {
+  const pageIndex = table.getState().pagination.pageIndex;
+  const pageCount = table.getPageCount();
+  const pageNumbers = getPageNumbers(pageIndex + 1, pageCount); // Generate page numbers
+
   return (
     <div className="flex items-center justify-between px-2">
+      {/* Row Selection Info */}
       <div className="flex-1 text-sm text-muted-foreground">
         {table.getFilteredSelectedRowModel().rows.length} of{" "}
         {table.getFilteredRowModel().rows.length} row(s) selected.
       </div>
+
+      {/* Pagination Controls */}
       <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
+        {/* Rows per Page Selector */}
+        <div className="flex items-center space-x-2 max-md:hidden">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
@@ -49,49 +57,95 @@ export function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
+
+        {/* Page Info */}
         <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
+          Page {pageIndex + 1} of {pageCount}
         </div>
-        <div className="flex items-center space-x-2">
+
+        {/* Pagination Buttons */}
+        <div className="flex items-center space-x-1">
+          {/* First Page */}
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to first page</span>
             <DoubleArrowLeftIcon className="h-4 w-4" />
           </Button>
+
+          {/* Previous Page */}
           <Button
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to previous page</span>
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
+
+          {/* Page Numbers */}
+          {pageNumbers.map((page, index) => (
+            <Button
+              key={index}
+              variant={page === pageIndex + 1 ? "default" : "outline"}
+              className="h-8 w-8 p-0"
+              onClick={() =>
+                typeof page === "number" && table.setPageIndex(page - 1)
+              }
+              disabled={page === "..."}
+            >
+              {page}
+            </Button>
+          ))}
+
+          {/* Next Page */}
           <Button
             variant="outline"
             className="h-8 w-8 p-0"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            <span className="sr-only">Go to next page</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>
+
+          {/* Last Page */}
           <Button
             variant="outline"
             className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            onClick={() => table.setPageIndex(pageCount - 1)}
             disabled={!table.getCanNextPage()}
           >
-            <span className="sr-only">Go to last page</span>
             <DoubleArrowRightIcon className="h-4 w-4" />
           </Button>
         </div>
       </div>
     </div>
   );
+}
+
+/**
+ * Generates an array of page numbers with ellipsis (`...`) for large pagination.
+ * @param {number} currentPage - The current page number.
+ * @param {number} totalPages - The total number of pages.
+ * @returns {Array<number | string>} Page numbers with ellipsis.
+ */
+function getPageNumbers(currentPage: number, totalPages: number) {
+  const pages: Array<number | string> = [];
+  const maxPagesToShow = 5;
+
+  if (totalPages <= maxPagesToShow) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  if (currentPage <= 3) {
+    pages.push(1, 2, 3, "...", totalPages);
+  } else if (currentPage >= totalPages - 2) {
+    pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
+  } else {
+    pages.push(1, "...", currentPage, "...", totalPages);
+  }
+
+  return pages;
 }

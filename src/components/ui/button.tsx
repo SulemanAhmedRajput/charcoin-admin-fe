@@ -28,6 +28,11 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         main_btn: "h-12 font-normal py-2 px-4",
       },
+      rounded: {
+        normal: "rounded-md",
+        lg: "rounded-lg",
+        xl: "rounded-2xl",
+      },
     },
     defaultVariants: {
       variant: "default",

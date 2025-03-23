@@ -66,7 +66,7 @@ const Dashboard = () => {
         <div className="grid grid-rows-2  gap-8">
           <div className="!h-full">
             <div className="grid !h-full  grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] gap-8">
-              <div className="bg-background  text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] ">
+              <div className="bg-background  text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] max-md:grid-cols-1 ">
                 <span className="space-y-2">
                   {" "}
                   <div className="text-3xl">0.0006587</div>
@@ -105,7 +105,7 @@ const Dashboard = () => {
           </div>
           <div className="h-full">
             <div className="grid h-full grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] gap-8">
-              <div className="bg-background text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] ">
+              <div className="bg-background text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] max-md:!grid-cols-1  ">
                 <span className="space-y-2">
                   {" "}
                   <div className="text-3xl">0.0006587</div>
@@ -153,8 +153,8 @@ const Dashboard = () => {
           containerClassName="h-[200px] w-full"
         />
         <hr className="min-w-[2px] h-full bg-custom-slate" />
-        <div className="grid h-max my-auto grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] gap-8">
-          <div className="bg-background text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] ">
+        <div className="grid h-max my-auto grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] max-md:grid-cols-1  gap-8">
+          <div className="text-center gap-4  p-4 py-8 max-md:w-max max-md:mx-auto    rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] max-md:grid-cols-1 ">
             <span className="space-y-2">
               {" "}
               <div className="text-3xl">0.0006587</div>
@@ -198,8 +198,8 @@ const Dashboard = () => {
           containerClassName="h-[200px] w-full"
         />
         <hr className="min-w-[2px] h-full bg-custom-slate" />
-        <div className="grid h-max my-auto grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))]  gap-8">
-          <div className="bg-background text-center gap-4  p-4 py-8 rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] ">
+        <div className="grid h-max my-auto grid-cols-[repeat(auto-fit,_minmax(320px,+1fr))] max-md:grid-cols-1  gap-8">
+          <div className="text-center gap-4  p-4 py-8 max-md:w-max max-md:mx-auto    rounded-xl grid grid-cols-[1fr_,2px,_1fr,_2px,_1fr] max-md:grid-cols-1 ">
             <span className="space-y-2">
               {" "}
               <div className="text-3xl">0.0006587</div>

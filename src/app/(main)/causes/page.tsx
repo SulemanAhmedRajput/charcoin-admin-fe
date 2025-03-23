@@ -120,8 +120,6 @@ const fetchCauses = async (query = "") => {
 export default function CausesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState("February 2023");
-  const [selectedRow, setSelectedRow] = useState(null);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   // React Query for data fetching
   const { data = [], isLoading } = useQuery({
@@ -143,7 +141,7 @@ export default function CausesPage() {
               <TabsTrigger value="completed">Completed</TabsTrigger>
               <TabsTrigger value="drafts">Drafts</TabsTrigger>
             </TabsList>
-            <div className="flex flex-col sm:flex-row gap-4 ">
+            {/* <div className="flex flex-col sm:flex-row gap-4 ">
               <Select value={selectedDate} onValueChange={setSelectedDate}>
                 <SelectTrigger className="w-full sm:w-[200px] bg-input focus-within:!ring-2 ring-offset-2 ring-primary outline-none h-12">
                   <SelectValue placeholder="Select date" />
@@ -164,7 +162,7 @@ export default function CausesPage() {
                   className="pl-10"
                 />
               </div>
-            </div>
+            </div> */}
           </div>
           <TabsContent value="running" className="mt-4 ">
             <AddCauseTable
