@@ -73,7 +73,8 @@ export default function ImageUploadSection({
         <Button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="bg-teal-500 hover:bg-teal-600 text-white flex items-center gap-2"
+          size={"lg"}
+          className="bg-primary hover:bg-primary/80 text-background flex items-center gap-2"
         >
           <Upload className="h-4 w-4" />
           Upload Images
@@ -90,8 +91,9 @@ export default function ImageUploadSection({
 
         <Button
           type="button"
-          variant="outline"
-          className="border-red-400 text-red-400 hover:bg-red-400/10 flex items-center gap-2"
+          variant="destructive"
+          size={"lg"}
+          className="bg-red-500 text-foreground size flex items-center gap-2"
           onClick={() => setImageFiles([])}
           disabled={imageFiles.length === 0}
         >

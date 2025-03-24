@@ -12,16 +12,15 @@ export interface StakedAmount {
 }
 
 export interface StakingEntry {
-  username: string;
-  wallet: string;
-  staking_id: string;
-  staked_amount: StakedAmount;
-  start_date: string;
-  expiration_date: string;
-  staking_duration: string;
-  voting_power: string;
-  status: StakingStatus;
-  penalized?: boolean;
+    username: string;
+    wallet: string;
+    staking_id: string;
+    staked_amount: number;
+    start_date: Date;
+    expiration_date: Date;
+    staking_duration: number;
+    voting_power: number;
+    status: "Active" | "Completed" | "Stopped";
 }
 
 export interface StakingSummary {

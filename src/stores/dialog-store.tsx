@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface DialogState {
-  openDialog: "detail" | "edit" | "add" | null;
+  openDialog: "causes_detail" | "causes_edit" | "causes_add" | null;
 
   openDetail: () => void;
   openEdit: () => void;
@@ -17,15 +17,16 @@ const useDialogStore = create<DialogState>((set) => ({
   openDialog: null,
 
   // Open functions
-  openDetail: () => set({ openDialog: "detail" }),
-  openEdit: () => set({ openDialog: "edit" }),
-  openAdd: () => set({ openDialog: "add" }),
+  openDetail: () => set({ openDialog: "causes_detail" }),
+  openEdit: () => set({ openDialog: "causes_edit" }),
+  openAdd: () => set({ openDialog: "causes_add" }),
   closeDialog: () => set({ openDialog: null }),
 
   // Setter functions
-  setOpenDetail: (isOpen) => set({ openDialog: isOpen ? "detail" : null }),
-  setOpenEdit: (isOpen) => set({ openDialog: isOpen ? "edit" : null }),
-  setOpenAdd: (isOpen) => set({ openDialog: isOpen ? "add" : null }),
+  setOpenDetail: (isOpen) =>
+    set({ openDialog: isOpen ? "causes_detail" : null }),
+  setOpenEdit: (isOpen) => set({ openDialog: isOpen ? "causes_edit" : null }),
+  setOpenAdd: (isOpen) => set({ openDialog: isOpen ? "causes_add" : null }),
 }));
 
 export default useDialogStore;

@@ -23,13 +23,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 // import { DataTableToolbar } from "../table/tasks-table-toolbar";
-import { CustomSheet } from "../reuseable/add-causes-sheet";
 import { Fetching } from "../reuseable/fetching";
 import { DataTablePagination } from "../table/tasks-table-pagination";
-import { AddCauseForm } from "./add-cause";
-import { CauseDetail } from "./cause-detail";
-import useDialogStore from "@/stores/dialog-store";
-import { EditCause } from "./edit-cause";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,14 +32,11 @@ interface DataTableProps<TData, TValue> {
   fetching: boolean;
 }
 
-export function AddCauseTable<TData, TValue>({
+export function NewsTable<TData, TValue>({
   columns,
   data,
   fetching,
 }: DataTableProps<TData, TValue>) {
-  const [isAddCauseOpen, setIsAddCauseOpen] = React.useState(false);
-  const { setOpenDetail, openDialog, setOpenEdit } = useDialogStore();
-
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -76,7 +68,7 @@ export function AddCauseTable<TData, TValue>({
   });
 
   return (
-    <div className="space-y-2 bg-background pb-1 rounded-xl">
+    <div className="space-y-4 bg-background pb-5 rounded-xl">
       {/* <DataTableToolbar table={table} /> */}
       <div className="rounded-md border bg-background ">
         {/* <ScrollArea> */}
@@ -105,7 +97,6 @@ export function AddCauseTable<TData, TValue>({
                 <TableRow
                   onClick={() => {
                     console.log("Clicked");
-                    setOpenDetail(true);
                   }}
                   // row.original?._id! ??
                   key={row.id}
@@ -144,36 +135,9 @@ export function AddCauseTable<TData, TValue>({
         </Table>
         {/* </ScrollArea> */}
       </div>
-      <div className="px-2">
+      <div className="px-5">
         <DataTablePagination table={table} />
       </div>
-      {/* <CustomSheet
-        isOpen={isAddCauseOpen}
-        setIsOpen={setIsAddCauseOpen}
-        title="Add Cause form"
-      >
-        <AddCauseForm />
-      </CustomSheet> */}
-      <CustomSheet
-        isOpen={openDialog === "causes_detail"}
-        setIsOpen={(isOpen) => {
-          console.log("isOpen", isOpen);
-          setOpenDetail(isOpen);
-        }}
-        title="See the Cause Detail"
-        className="!p-0"
-      >
-        <CauseDetail />
-      </CustomSheet>
-
-      <CustomSheet
-        isOpen={openDialog == "causes_edit"}
-        setIsOpen={setOpenEdit}
-        title="Edit Cause form"
-        className="pt-2 px-4"
-      >
-        <EditCause />
-      </CustomSheet>
     </div>
   );
 }

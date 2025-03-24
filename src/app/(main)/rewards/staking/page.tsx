@@ -163,11 +163,14 @@
 
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
+import { useState } from "react";
 
+import { stakingColumns } from "@/components/columns/staking_column";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { StakingTable } from "@/components/rewards/staking-table";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -176,15 +179,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TopTierTable } from "@/components/rewards/top-tier-table";
-import { TopTierColumn } from "@/components/columns/top-tier-column";
-import { Button } from "@/components/ui/button";
-import { NFTSRecord } from "@/types/rewards";
-import { nftsColumns } from "@/components/columns/nfts_column";
-import { NftsTable } from "@/components/rewards/nfts-table";
-import { Card } from "@/components/ui/card";
-import { StakingData, StakingEntry, StakingStatus } from "@/types/staking";
+import { StakingData, StakingEntry } from "@/types/staking";
 
 // Example Data
 const stakingExample: StakingData = {
@@ -198,74 +193,80 @@ const stakingExample: StakingData = {
   staking_data: [
     {
       username: "SmartCircus",
-      wallet: "91f7XMyE2z1B5Ykphg3dn8Y7GcdrPzMoxJFluxuAWhgKy",
-      staking_id: "37298497893",
-      staked_amount: {
-        tokens: 6475,
-        usd_value: 113.2,
-      },
-      start_date: "May 22, 2025",
-      expiration_date: "Feb 21, 2025",
-      staking_duration: "30 days",
-      voting_power: "0.5 votes per staked token",
-      status: StakingStatus.Active,
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 2450,
+      start_date: new Date("Mar 17, 2025"),
+      expiration_date: new Date("Apr 16, 2025"),
+      staking_duration: 30,
+      voting_power: 0.5,
+      status: "Active",
     },
     {
       username: "SmartCircus",
-      wallet: "91f7XMyE2z1B5Ykphg3dn8Y7GcdrPzMoxJFluxuAWhgKy",
-      staking_id: "37298497893",
-      staked_amount: {
-        tokens: 20000,
-        usd_value: 3123.11,
-      },
-      start_date: "May 10, 2025",
-      expiration_date: "Jul 19, 2025",
-      staking_duration: "60 days",
-      voting_power: "1 vote per staked token",
-      status: StakingStatus.Pending,
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 6475,
+      start_date: new Date("May 22, 2025"),
+      expiration_date: new Date("Feb 21, 2025"),
+      staking_duration: 30,
+      voting_power: 0.5,
+      status: "Active",
     },
     {
       username: "SmartCircus",
-      wallet: "91f7XMyE2z1B5Ykphg3dn8Y7GcdrPzMoxJFluxuAWhgKy",
-      staking_id: "37298497893",
-      staked_amount: {
-        tokens: 5110,
-        usd_value: 930.16,
-      },
-      start_date: "Apr 15, 2025",
-      expiration_date: "May 14, 2025",
-      staking_duration: "30 days",
-      voting_power: "0.5 votes per staked token",
-      status: StakingStatus.Expired,
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 20000,
+      start_date: new Date("May 10, 2025"),
+      expiration_date: new Date("Jul 19, 2025"),
+      staking_duration: 60,
+      voting_power: 1,
+      status: "Active",
     },
     {
       username: "SmartCircus",
-      wallet: "91f7XMyE2z1B5Ykphg3dn8Y7GcdrPzMoxJFluxuAWhgKy",
-      staking_id: "37298497893",
-      staked_amount: {
-        tokens: 2147,
-        usd_value: 50.2,
-      },
-      start_date: "Apr 7, 2025",
-      expiration_date: "Aug 14, 2025",
-      staking_duration: "120 days",
-      voting_power: "3 votes per staked token",
-      status: StakingStatus.Completed,
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 5110,
+      start_date: new Date("Apr 15, 2025"),
+      expiration_date: new Date("May 14, 2025"),
+      staking_duration: 30,
+      voting_power: 0.5,
+      status: "Active",
     },
     {
       username: "SmartCircus",
-      wallet: "91f7XMyE2z1B5Ykphg3dn8Y7GcdrPzMoxJFluxuAWhgKy",
-      staking_id: "37298497893",
-      staked_amount: {
-        tokens: 3720,
-        usd_value: 85.92,
-      },
-      start_date: "Mar 30, 2025",
-      expiration_date: "Apr 28, 2025",
-      staking_duration: "30 days",
-      voting_power: "0.5 votes per staked token",
-      status: StakingStatus.Stopped,
-      penalized: true,
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 2447,
+      start_date: new Date("Apr 7, 2025"),
+      expiration_date: new Date("Sep 14, 2025"),
+      staking_duration: 120,
+      voting_power: 3,
+      status: "Active",
+    },
+    {
+      username: "SmartCircus",
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 84475,
+      start_date: new Date("Mar 30, 2025"),
+      expiration_date: new Date("Apr 28, 2025"),
+      staking_duration: 30,
+      voting_power: 0.5,
+      status: "Completed",
+    },
+    {
+      username: "SmartCircus",
+      wallet: "0H7hXwqZtB3VjKhgSa8nY7tCdPGzMoJFlxkuAWNqKv",
+      staking_id: "37298478983",
+      staked_amount: 7895,
+      start_date: new Date("Mar 28, 2025"),
+      expiration_date: new Date("Aug 22, 2025"),
+      staking_duration: 180,
+      voting_power: 5,
+      status: "Stopped",
     },
   ],
 };
@@ -343,9 +344,9 @@ const TopTiers = () => {
           </div>
         </div>
 
-        <NftsTable
+        <StakingTable
           data={data} // ✅ Now `data` is always a TransactionRecord[]
-          columns={nftsColumns}
+          columns={stakingColumns}
           fetching={isLoading}
         />
       </div>

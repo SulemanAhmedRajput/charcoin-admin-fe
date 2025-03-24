@@ -102,16 +102,32 @@ const causes: Cause[] = [
 // Define columns
 
 // Fetch function for React Query
-const fetchCauses = async (query = "") => {
-  // In a real app, this would be an API call
-  // For this example, we'll filter the dummy data
+// const fetchCauses = async (query = "") => {
+//   // In a real app, this would be an API call
+//   // For this example, we'll filter the dummy data
+//   return new Promise<Cause[]>((resolve) => {
+//     setTimeout(() => {
+//       const filteredCauses = causes.filter(
+//         (cause) =>
+//           cause.name.toLowerCase().includes(query.toLowerCase()) ||
+//           cause.organization.toLowerCase().includes(query.toLowerCase())
+//       );
+//       resolve(filteredCauses);
+//     }, 500);
+//   });
+// };
+
+const fetchCauses = async (query = "", tab = "running") => {
   return new Promise<Cause[]>((resolve) => {
     setTimeout(() => {
+      // Filter the dummy data based on the search query
       const filteredCauses = causes.filter(
         (cause) =>
           cause.name.toLowerCase().includes(query.toLowerCase()) ||
           cause.organization.toLowerCase().includes(query.toLowerCase())
       );
+
+      console.log(`Fetching data for tab: ${tab} with query: ${query}`);
       resolve(filteredCauses);
     }, 500);
   });
@@ -119,12 +135,13 @@ const fetchCauses = async (query = "") => {
 
 export default function CausesPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDate, setSelectedDate] = useState("February 2023");
+  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [activeTab, setActiveTab] = useState("running");
 
-  // React Query for data fetching
+  // React Query for fetching causes
   const { data = [], isLoading } = useQuery({
-    queryKey: ["causes", searchQuery],
-    queryFn: () => fetchCauses(searchQuery),
+    queryKey: ["causes", searchQuery, activeTab],
+    queryFn: () => fetchCauses(searchQuery, activeTab),
   });
 
   return (
@@ -132,54 +149,49 @@ export default function CausesPage() {
       <h1 className="text-2xl font-bold mb-6">Causes</h1>
 
       <div className="mb-6">
-        <Tabs defaultValue="running">
+        <Tabs
+          defaultValue="running"
+          onValueChange={(value) => setActiveTab(value)}
+        >
           <div className="flex items-end gap-4">
             <TabsList className="!bg-custom-slate">
-              <TabsTrigger value="running" className="relative">
-                Running
-              </TabsTrigger>
+              <TabsTrigger value="running">Running</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
               <TabsTrigger value="drafts">Drafts</TabsTrigger>
             </TabsList>
-            {/* <div className="flex flex-col sm:flex-row gap-4 ">
-              <Select value={selectedDate} onValueChange={setSelectedDate}>
-                <SelectTrigger className="w-full sm:w-[200px] bg-input focus-within:!ring-2 ring-offset-2 ring-primary outline-none h-12">
+
+            <div className="flex items-center gap-4 mb-4">
+              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                <SelectTrigger className="w-[200px] !bg-[#3D3C44]">
                   <SelectValue placeholder="Select date" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="February 2023">February 2023</SelectItem>
-                  <SelectItem value="March 2023">March 2023</SelectItem>
-                  <SelectItem value="April 2023">April 2023</SelectItem>
+                  <SelectItem value="January 2025">January 2025</SelectItem>
+                  <SelectItem value="February 2025">February 2025</SelectItem>
+                  <SelectItem value="March 2025">March 2025</SelectItem>
                 </SelectContent>
               </Select>
 
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <div className="relative w-80">
                 <Input
-                  placeholder="Search by name"
+                  className="!w-full !bg-[#3D3C44]"
+                  placeholder="Search by username, wallet, or hash"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
                 />
+                <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               </div>
-            </div> */}
+            </div>
           </div>
-          <TabsContent value="running" className="mt-4 ">
-            <AddCauseTable
-              data={data ?? []}
-              columns={runningCauseColumns}
-              fetching={isLoading}
-            />
+
+          <TabsContent value="running">
+            <AddCauseTable data={data} columns={runningCauseColumns} fetching={isLoading} />
           </TabsContent>
           <TabsContent value="completed">
-            <div className="flex justify-center items-center h-40">
-              <p className="text-muted-foreground">No completed causes</p>
-            </div>
+            <AddCauseTable data={data} columns={runningCauseColumns} fetching={isLoading} />
           </TabsContent>
           <TabsContent value="drafts">
-            <div className="flex justify-center items-center h-40">
-              <p className="text-muted-foreground">No draft causes</p>
-            </div>
+            <AddCauseTable data={data} columns={runningCauseColumns} fetching={isLoading} />
           </TabsContent>
         </Tabs>
       </div>

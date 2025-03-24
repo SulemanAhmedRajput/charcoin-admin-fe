@@ -17,3 +17,11 @@ export const formatNumberWithOrdinal = (num: number) => {
   const formattedNumber = num.toLocaleString(); // Add commas
   return `${formattedNumber}`;
 };
+
+export const formatDate = (date: Date) => {
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};

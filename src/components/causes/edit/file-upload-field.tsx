@@ -44,7 +44,8 @@ export default function FileUploadSection({
       <div className="flex gap-4 mt-4">
         <Button
           type="button"
-          className="bg-teal-500 hover:bg-teal-600 text-white flex items-center gap-2"
+          size={"lg"}
+          className="bg-primary hover:bg-primary/80 text-background flex items-center gap-2"
           onClick={() => fileInputRef.current?.click()}
         >
           <Upload className="h-4 w-4" />
@@ -62,8 +63,9 @@ export default function FileUploadSection({
 
         <Button
           type="button"
-          variant="outline"
-          className="border-red-400 text-red-400 hover:bg-red-400/10 flex items-center gap-2"
+          variant="destructive"
+          size={"lg"}
+          className="bg-red-500 text-foreground hover:bg-red-400/10 flex items-center gap-2"
           onClick={handleFileDelete}
           disabled={!file}
         >

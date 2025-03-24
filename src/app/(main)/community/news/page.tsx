@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { useState } from "react";
+
+import { NewsColumn } from "@/components/columns/news-column";
+import { NewsTable } from "@/components/community/news-table";
+import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -18,147 +16,145 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { NewsArticle, NewsData, NewsStatus } from "@/types/news";
 
-const newsData = [
-  {
-    id: 124,
-    video: "/images/video-thumbnail-1.jpg",
-    title: "We are making a difference in water cleaning",
-    description:
-      "We are making a difference in water purification, bringing clean water to communities in need...",
-    status: "Published",
-    category: "Clean Water",
-    postedOn: "Mar 21, 2025",
-    views: "7,145",
+const newsExample: NewsData = {
+  news_summary: {
+    total_articles: 5,
   },
-  {
-    id: 110,
-    video: "/images/video-thumbnail-2.jpg",
-    title: "Clean Water for Thousands: New Wells Installed in Kenya",
-    description:
-      "Donations funded 10 new wells, providing clean water to over 5,000 people in rural Kenya...",
-    status: "Published",
-    category: "Clean Water",
-    postedOn: "Feb 10, 2025",
-    views: "14,214",
-  },
-  {
-    id: 104,
-    video: "/images/video-thumbnail-3.jpg",
-    title: "100,000 Meals Delivered to Families in Crisis",
-    description:
-      "Thanks to generous donations, emergency food packages reached over 20,000 families...",
-    status: "Unpublished",
-    category: "Malnutrition & Hunger",
-    postedOn: "Feb 10, 2025",
-    views: "8,547",
-  },
-];
+  news_data: [
+    {
+      id: 124,
+      video_thumbnail:
+        "https://fastly.picsum.photos/id/606/200/300.jpg?blur=2&hmac=zNI-M9rxd9jMP10_lTs7UEldQB-G0RIEBoY7JHePXAA",
+      title: "We are making a difference in water cleaning",
+      short_description:
+        "We are making a difference in water purification, bringing clean and safe water to communities in need. Every drop counts, and every effort changes lives. Join us in creating a cleaner future!",
+      status: NewsStatus.Published,
+      category: "Clean Water",
+      posted_on: "Mar 21, 2025",
+      views: 7145,
+    },
+    {
+      id: 110,
+      video_thumbnail:
+        "https://fastly.picsum.photos/id/606/200/300.jpg?blur=2&hmac=zNI-M9rxd9jMP10_lTs7UEldQB-G0RIEBoY7JHePXAA",
+      title: "Clean Water for Thousands: New Wells Installed in Kenya",
+      short_description:
+        "Donations funded 10 new wells, providing clean water to over 5,000 people in rural Kenya, reducing disease and improving lives.",
+      status: NewsStatus.Published,
+      category: "Clean Water",
+      posted_on: "Feb 17, 2025",
+      views: 14214,
+    },
+    {
+      id: 104,
+      video_thumbnail:
+        "https://fastly.picsum.photos/id/606/200/300.jpg?blur=2&hmac=zNI-M9rxd9jMP10_lTs7UEldQB-G0RIEBoY7JHePXAA",
+      title: "100,000 Meals Delivered to Families in Crisis",
+      short_description:
+        "Thanks to generous donations, emergency food packages reached over 20,000 families suffering from hunger and malnutrition.",
+      status: NewsStatus.Unpublished,
+      category: "Malnutrition & Hunger",
+      posted_on: "Feb 10, 2025",
+      views: 8547,
+    },
+    {
+      id: 90,
+      video_thumbnail:
+        "https://fastly.picsum.photos/id/606/200/300.jpg?blur=2&hmac=zNI-M9rxd9jMP10_lTs7UEldQB-G0RIEBoY7JHePXAA",
+      title: "New School Opens, Giving 500 Kids a Future",
+      short_description:
+        "A new school, built with donor support, now educates 500 children in a low-income area, empowering them with knowledge and opportunities.",
+      status: NewsStatus.Published,
+      category: "Education",
+      posted_on: "Dec 10, 2024",
+      views: 3658,
+    },
+    {
+      id: 90,
+      video_thumbnail:
+        "https://fastly.picsum.photos/id/606/200/300.jpg?blur=2&hmac=zNI-M9rxd9jMP10_lTs7UEldQB-G0RIEBoY7JHePXAA",
+      title: "Solar Power Brings Light to Remote Villages",
+      short_description:
+        "Solar power installations in remote villages now provide sustainable energy for schools, homes, and healthcare access.",
+      status: NewsStatus.Published,
+      category: "House Building",
+      posted_on: "Dec 2, 2024",
+      views: 1124,
+    },
+  ],
+};
 
-const NewsDashboard = () => {
+// ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
+const fetchTransactions = async (
+  query = "",
+  month = "March 2025"
+): Promise<NewsArticle[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const filtered = newsExample.news_data.filter(
+        (record) => record.title.toLowerCase().includes(query.toLowerCase())
+        // record.username.toLowerCase().includes(query.toLowerCase()) ||
+        // record.wallet.toLowerCase().includes(query.toLowerCase()) ||
+        // record.hash.toLowerCase().includes(query.toLowerCase())
+      );
+      resolve(filtered);
+    }, 500);
+  });
+};
+
+const News = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filter, setFilter] = useState("All");
+  const [selectedMonth, setSelectedMonth] = useState("March 2025");
 
-  const filteredData = newsData.filter((item) =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const { data = [], isLoading } = useQuery<NewsArticle[]>({
+    queryKey: ["news", searchQuery, selectedMonth],
+    queryFn: () => fetchTransactions(searchQuery, selectedMonth),
+  });
 
   return (
-    <div className="p-6 bg-[#121212] min-h-screen text-white">
-      {/* Header & Filters */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">News</h2>
-        <Button className="bg-[#00E0FF] text-black hover:bg-[#00B3CC]">
-          Add New →
-        </Button>
-      </div>
+    <HeaderWrapper
+      title="News"
+      description="Public news about the progress of each donation and the CharCoin impact"
+      actions={<Button size={"lg"}>Add new →</Button>}
+    >
+      <div className="mb-6 ">
+        <div className="flex items-center gap-4 mb-4">
+          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+            <SelectTrigger
+              variant={"newly_secondary"}
+              className="w-[200px] !bg-[#3D3C44]"
+            >
+              <SelectValue placeholder="Select date" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="January 2025">January 2025</SelectItem>
+              <SelectItem value="February 2025">February 2025</SelectItem>
+              <SelectItem value="March 2025">March 2025</SelectItem>
+            </SelectContent>
+          </Select>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <Select value={filter} onValueChange={setFilter}>
-          <SelectTrigger className="w-full bg-[#222] border-[#333] text-white">
-            <SelectValue placeholder="All status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="All">All status</SelectItem>
-            <SelectItem value="Published">Published</SelectItem>
-            <SelectItem value="Unpublished">Unpublished</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Search by title or description"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-[#222] border-[#333] text-white"
-          />
+          <div className="relative  w-80 ">
+            <Input
+              className="!w-full !bg-[#3D3C44] "
+              variant={"newly_secondary"}
+              placeholder="Search by username, wallet, or hash"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          </div>
         </div>
-      </div>
 
-      {/* Table */}
-      <div className="rounded-lg border border-[#333] bg-[#1A1A1A]">
-        <Table>
-          <TableHeader className="bg-[#222]">
-            <TableRow>
-              <TableHead>ID</TableHead>
-              <TableHead>Video</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Short Description</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Posted On</TableHead>
-              <TableHead>Views</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredData.map((news, index) => (
-              <TableRow key={index} className="border-b border-[#333]">
-                <TableCell>{news.id}</TableCell>
-                <TableCell>
-                  <div className="relative w-[50px] h-[50px]">
-                    <Image
-                      src={news.video}
-                      alt="video thumbnail"
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded"
-                    />
-                  </div>
-                </TableCell>
-                <TableCell>{news.title}</TableCell>
-                <TableCell className="truncate w-[300px]">
-                  {news.description}
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    className={
-                      news.status === "Published"
-                        ? "bg-green-500"
-                        : "bg-red-500"
-                    }
-                  >
-                    {news.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>{news.category}</TableCell>
-                <TableCell>{news.postedOn}</TableCell>
-                <TableCell>{news.views}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <NewsTable
+          data={data} // ✅ Now `data` is always a TransactionRecord[]
+          columns={NewsColumn}
+          fetching={isLoading}
+        />
       </div>
-
-      {/* Pagination */}
-      {/* <div className="mt-4 flex justify-end">
-        <Pagination totalPages={3} />
-      </div> */}
-    </div>
+    </HeaderWrapper>
   );
 };
 
-export default NewsDashboard;
+export default News;
