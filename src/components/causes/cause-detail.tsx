@@ -20,7 +20,7 @@ const personalDetails = [
 ];
 
 export const CauseDetail = () => {
-  const { setOpenEdit } = useDialogStore();
+  const { setCausesOpenEdit } = useDialogStore();
   return (
     <div>
       <Image
@@ -124,7 +124,7 @@ export const CauseDetail = () => {
         {/* Edit Button  */}
         <Button
           size={"lg"}
-          onClick={() => setOpenEdit(true)}
+          onClick={() => setCausesOpenEdit(true)}
           className="text-lg ml-auto"
           rounded={"xl"}
         >

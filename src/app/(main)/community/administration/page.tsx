@@ -15,7 +15,7 @@
 // import { useState } from "react";
 
 // const adminsData = [
- 
+
 // ];
 
 // const Administrators = () => {
@@ -88,7 +88,6 @@
 // };
 
 // export default Administrators;
-
 
 // "use client";
 
@@ -235,9 +234,6 @@
 
 // export default Administrators;
 
-
-
-
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
@@ -263,6 +259,8 @@ import { UserWalletColumns } from "@/components/columns/user-wallet-column";
 import { Administration } from "@/types/administration";
 import { AdministrationTable } from "@/components/community/administration-table";
 import { AdminstrationColumn } from "@/components/columns/administration";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import useDialogStore from "@/stores/dialog-store";
 
 const administration: Administration[] = [
   {
@@ -343,6 +341,7 @@ const fetchTransactions = async (
 const AdministrationPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const { openDialog, setCommunityAdministrationAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<Administration[]>({
     queryKey: ["administration", searchQuery, selectedMonth],
@@ -353,7 +352,16 @@ const AdministrationPage = () => {
     <HeaderWrapper
       title="News"
       description="Public news about the progress of each donation and the CharCoin impact"
-      actions={<Button size={"lg"}>Add new →</Button>}
+      actions={
+        <Button
+          size={"lg"}
+          onClick={() => {
+            setCommunityAdministrationAdd(true);
+          }}
+        >
+          Add new →
+        </Button>
+      }
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
@@ -389,6 +397,14 @@ const AdministrationPage = () => {
           fetching={isLoading}
         />
       </div>
+      <CustomSheet
+        isOpen={openDialog == "community_administration_add"}
+        setIsOpen={setCommunityAdministrationAdd}
+        title="Edit Cause form"
+        className="pt-2 px-4"
+      >
+        Case
+      </CustomSheet>
     </HeaderWrapper>
   );
 };

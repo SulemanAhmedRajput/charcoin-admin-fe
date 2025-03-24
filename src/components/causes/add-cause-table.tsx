@@ -43,7 +43,12 @@ export function AddCauseTable<TData, TValue>({
   fetching,
 }: DataTableProps<TData, TValue>) {
   const [isAddCauseOpen, setIsAddCauseOpen] = React.useState(false);
-  const { setOpenDetail, openDialog, setOpenEdit } = useDialogStore();
+  const {
+    setCausesOpenAdd,
+    setCausesOpenDetail,
+    openDialog,
+    setCausesOpenEdit,
+  } = useDialogStore();
 
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -105,7 +110,7 @@ export function AddCauseTable<TData, TValue>({
                 <TableRow
                   onClick={() => {
                     console.log("Clicked");
-                    setOpenDetail(true);
+                    setCausesOpenDetail(true);
                   }}
                   // row.original?._id! ??
                   key={row.id}
@@ -147,19 +152,19 @@ export function AddCauseTable<TData, TValue>({
       <div className="px-2">
         <DataTablePagination table={table} />
       </div>
-      {/* <CustomSheet
-        isOpen={isAddCauseOpen}
-        setIsOpen={setIsAddCauseOpen}
+      <CustomSheet
+        isOpen={openDialog === "causes_add"}
+        setIsOpen={(isOpen) => {
+          setCausesOpenAdd(isOpen);
+        }}
         title="Add Cause form"
+        className="!p-0"
       >
-        <AddCauseForm />
-      </CustomSheet> */}
+        Add Form
+      </CustomSheet>
       <CustomSheet
         isOpen={openDialog === "causes_detail"}
-        setIsOpen={(isOpen) => {
-          console.log("isOpen", isOpen);
-          setOpenDetail(isOpen);
-        }}
+        setIsOpen={setCausesOpenDetail}
         title="See the Cause Detail"
         className="!p-0"
       >
@@ -168,7 +173,7 @@ export function AddCauseTable<TData, TValue>({
 
       <CustomSheet
         isOpen={openDialog == "causes_edit"}
-        setIsOpen={setOpenEdit}
+        setIsOpen={setCausesOpenEdit}
         title="Edit Cause form"
         className="pt-2 px-4"
       >

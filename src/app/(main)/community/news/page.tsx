@@ -17,6 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { NewsArticle, NewsData, NewsStatus } from "@/types/news";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import AddNewNews from "@/components/community/add-new-news";
+import useDialogStore from "@/stores/dialog-store";
 
 const newsExample: NewsData = {
   news_summary: {
@@ -107,6 +110,7 @@ const fetchTransactions = async (
 const News = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const { openDialog, setCommunityNewsAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<NewsArticle[]>({
     queryKey: ["news", searchQuery, selectedMonth],
@@ -117,7 +121,16 @@ const News = () => {
     <HeaderWrapper
       title="News"
       description="Public news about the progress of each donation and the CharCoin impact"
-      actions={<Button size={"lg"}>Add new →</Button>}
+      actions={
+        <Button
+          size={"lg"}
+          onClick={() => {
+            setCommunityNewsAdd(true);
+          }}
+        >
+          Add new →
+        </Button>
+      }
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
@@ -153,6 +166,14 @@ const News = () => {
           fetching={isLoading}
         />
       </div>
+      <CustomSheet
+        isOpen={openDialog == "community_news_add"}
+        setIsOpen={setCommunityNewsAdd}
+        title="Edit Cause form"
+        className="pt-2 px-4"
+      >
+        <AddNewNews />
+      </CustomSheet>
     </HeaderWrapper>
   );
 };

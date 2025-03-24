@@ -20,6 +20,9 @@ import { NewsArticle } from "@/types/news";
 import { UserStatus, UserWallet } from "@/types/user-and-wallet";
 import { UserWalletTable } from "@/components/community/user-wallet-table";
 import { UserWalletColumns } from "@/components/columns/user-wallet-column";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import useDialogStore from "@/stores/dialog-store";
+import { AddUserWallet } from "@/components/community/add-user-wallet";
 const newsExample: UserWallet[] = [
   {
     id: 12458,
@@ -77,6 +80,7 @@ const fetchTransactions = async (
 const News = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const { openDialog, setCommunityUserWalletAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<UserWallet[]>({
     queryKey: ["user-wallet", searchQuery, selectedMonth],
@@ -87,7 +91,16 @@ const News = () => {
     <HeaderWrapper
       title="News"
       description="Public news about the progress of each donation and the CharCoin impact"
-      actions={<Button size={"lg"}>Add new →</Button>}
+      actions={
+        <Button
+          size={"lg"}
+          onClick={() => {
+            setCommunityUserWalletAdd(true);
+          }}
+        >
+          Add new →
+        </Button>
+      }
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
@@ -123,6 +136,14 @@ const News = () => {
           fetching={isLoading}
         />
       </div>
+      <CustomSheet
+        isOpen={openDialog == "community_user_wallet_add"}
+        setIsOpen={setCommunityUserWalletAdd}
+        title="Edit Cause form"
+        className="pt-2 px-4"
+      >
+        <AddUserWallet />
+      </CustomSheet>
     </HeaderWrapper>
   );
 };
