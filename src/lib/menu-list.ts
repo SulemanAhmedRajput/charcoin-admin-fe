@@ -63,6 +63,11 @@ export function getMenuList(): Group[] {
               label: "NTFs",
               icon: Hash,
             },
+            {
+              href: "/rewards/staking",
+              label: "Staking",
+              icon: Hash,
+            },
           ],
         },
         {

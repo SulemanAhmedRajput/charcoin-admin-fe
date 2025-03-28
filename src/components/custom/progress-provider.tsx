@@ -8,7 +8,7 @@ const ProgressProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
       <ProgressBar
         height="6px"
-        color="linear-gradient(hsla(258, 75%, 80%, 1), hsla(173, 100%, 61%, 1))" // Light to dark gradient
+        color="#4F46E5" // Use a solid color (e.g., Tailwind's Indigo-600)
         options={{}}
         shallowRouting
       />

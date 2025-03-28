@@ -4,11 +4,12 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: hsl(248, 6%, 25%);
 }
 
 @layer base {
   :root {
-    --background: 252 8% 12%; 
+    --background: 252 8% 12%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -18,9 +19,9 @@ body {
     --primary-foreground: 210 40% 98%;
     --secondary: 250 7% 16%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
+    --muted: 0 0% 22%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
+    --accent: 248 6% 25%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -36,7 +37,7 @@ body {
     --slate: 0 0% 60%;
   }
   .dark {
-    --background: 252 8% 12%; 
+    --background: 252 8% 12%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -46,11 +47,11 @@ body {
     --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 250 7% 16%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
+    --muted: 0 0% 22%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 248 6% 25%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 355 90% 51%;
     --destructive-foreground: 210 40% 98%;
     --border: 255 6% 14%;
     --input: 0 0% 22%;

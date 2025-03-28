@@ -9,6 +9,8 @@ import { useState } from "react";
 import * as yup from "yup";
 import { Eye, EyeSlash } from "@mynaui/icons-react";
 import { Loader } from "lucide-react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type FormData = yup.InferType<typeof loginSchema>;
 
@@ -16,6 +18,7 @@ const AdminLoginForm = () => {
   const [showPin, setShowPin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -29,6 +32,9 @@ const AdminLoginForm = () => {
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
+      toast.success("Login successful!");
+      router.push("/dashboard");
+
       console.log(data);
     } catch (error) {
       console.error(error);

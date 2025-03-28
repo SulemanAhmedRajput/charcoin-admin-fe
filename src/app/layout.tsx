@@ -1,12 +1,13 @@
+import ProgressProvider from "@/components/custom/progress-provider";
+import { SplashScreen } from "@/components/splash/screen";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import { QueryProvider } from "@/providers/query-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { Suspense } from "react";
-import { SplashScreen } from "@/components/splash/screen";
-import ProgressProvider from "@/components/custom/progress-provider";
 import localFont from "next/font/local";
+import { Suspense } from "react";
 import { Toaster } from "sonner";
+import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -126,19 +127,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${wfVisualSans.className} antialiased`}
       >
+        {/* <ScrollArea className="max-h-screen  h-screen min-w-screen w-screen overflow-auto  whitespace-nowrap"> */}
         <Suspense fallback={<SplashScreen />}>
           <ProgressProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="dark"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
+            <QueryProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {children}
+              </ThemeProvider>
+            </QueryProvider>
+            <Toaster />
           </ProgressProvider>
-          <Toaster />
         </Suspense>
+        {/* </ScrollArea> */}
       </body>
     </html>
   );
