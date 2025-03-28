@@ -1,26 +1,17 @@
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import { Row } from "@tanstack/react-table";
-import { taskSchema } from "@/schemas/task.schema";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { Row } from "@tanstack/react-table";
 
-import { labels } from "@/assets/data";
 import { UpdateTaskSheet } from "./update-task-sheet";
-import React from "react";
-import { DeleteTasksDialog } from "./delete-task-dialog";
-import { useUpdateTasks } from "@/api/mutation/task.mutation";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -29,27 +20,27 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const task = taskSchema.parse(row.original);
-  const [showUpdateTaskSheet, setShowUpdateTaskSheet] = React.useState(false);
-  const [showDeleteTaskDialog, setShowDeleteTaskDialog] = React.useState(false);
-  const updateTasks = useUpdateTasks();
+  // const task = taskSchema.parse(row.original);
+  // const [showUpdateTaskSheet, setShowUpdateTaskSheet] = React.useState(false);
+  // const [showDeleteTaskDialog, setShowDeleteTaskDialog] = React.useState(false);
+  // const updateTasks = useUpdateTasks();
 
   return (
     <DropdownMenu>
       <UpdateTaskSheet
-        open={showUpdateTaskSheet}
-        onOpenChange={setShowUpdateTaskSheet}
+        // open={showUpdateTaskSheet}
+        // onOpenChange={setShowUpdateTaskSheet}
         task={row.original}
       />
       {/*
        */}
-      <DeleteTasksDialog
+      {/* <DeleteTasksDialog
         open={showDeleteTaskDialog}
         onOpenChange={setShowDeleteTaskDialog}
         tasks={[row.original?._id]}
         showTrigger={false}
         onSuccess={() => row.toggleSelected(false)}
-      />
+      /> */}
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -60,13 +51,14 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem onSelect={() => setShowUpdateTaskSheet(true)}>
+        {/* <DropdownMenuItem onSelect={() => setShowUpdateTaskSheet(true)}>
           Edit
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup
+            Hi there 
+            {/* <DropdownMenuRadioGroup
               value={task.label}
               onValueChange={(value) => {
                 updateTasks.mutate({
@@ -80,14 +72,14 @@ export function DataTableRowActions<TData>({
                   {label.label}
                 </DropdownMenuRadioItem>
               ))}
-            </DropdownMenuRadioGroup>
+            </DropdownMenuRadioGroup> */}
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => setShowDeleteTaskDialog(true)}>
+        {/* <DropdownMenuItem onSelect={() => setShowDeleteTaskDialog(true)}>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

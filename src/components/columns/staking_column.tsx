@@ -1,11 +1,36 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "../table/tasks-table-column-header";
-import { Badge } from "../ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { StakingEntry } from "@/types/staking";
-import { cn } from "@/lib/utils";
+import { ColumnDef } from "@tanstack/react-table";
 import clsx from "clsx";
 import { useState } from "react";
+import { DataTableColumnHeader } from "../table/tasks-table-column-header";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+
+const StatusCell = ({ row }: { row: any }) => {
+  const [newStatus, setNewStatus] = useState<string>(row.getValue("status") as string);
+
+  return (
+    <Select defaultValue={newStatus} onValueChange={setNewStatus}>
+      <SelectTrigger
+        variant={"newly_secondary"}
+        className={clsx({
+          "text-[#6df56d] !ring-[#6df56d]": newStatus === "Active",
+          "text-primary !ring-primary": newStatus === "Completed",
+          "text-[#ff6d6d] !ring-[#ff6d6d]": newStatus === "Stopped",
+        })}
+      >
+        <SelectValue placeholder="Select Status" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="Active">Active</SelectItem>
+        <SelectItem value="Completed">Completed</SelectItem>
+        <SelectItem value="Stopped">Stopped</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+};
+
+
+
 
 export const stakingColumns: ColumnDef<StakingEntry>[] = [
   {
@@ -54,29 +79,8 @@ export const stakingColumns: ColumnDef<StakingEntry>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    cell: ({ row }) => {
-      const [newStatus, setNewStatus] = useState<string>(row.getValue("status") as string);
-  
-      return (
-        <Select defaultValue={newStatus} onValueChange={setNewStatus}>
-          <SelectTrigger
-            variant={"newly_secondary"}
-            className={clsx({
-              "text-[#6df56d] !ring-[#6df56d]": newStatus === "Active",
-              "text-primary !ring-primary": newStatus === "Completed",
-              "text-[#ff6d6d] !ring-[#ff6d6d]": newStatus === "Stopped",
-            })}
-          >
-            <SelectValue placeholder="Select Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Active">Active</SelectItem>
-            <SelectItem value="Completed">Completed</SelectItem>
-            <SelectItem value="Stopped">Stopped</SelectItem>
-          </SelectContent>
-        </Select>
-      );
-    },
+    cell: ({ row }) => <StatusCell row={row} />, 
+
   },
   
 ];

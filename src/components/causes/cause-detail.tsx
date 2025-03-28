@@ -1,9 +1,8 @@
+import useDialogStore from "@/stores/dialog-store";
+import { DownloadSolid, Edit } from "@mynaui/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Download, DownloadSolid, Edit } from "@mynaui/icons-react";
-import { DownloadIcon } from "@radix-ui/react-icons";
-import useDialogStore from "@/stores/dialog-store";
 
 const details = [
   { label: "Country", value: "Nicaragua" },
@@ -83,9 +82,9 @@ export const CauseDetail = () => {
         </div>
         {/* Detail Like Country,.... */}
         <div className="flex flex-wrap gap-x-10  gap-y-5 text-sm">
-          {details?.map((item) => {
+          {details?.map((item, key) => {
             return (
-              <div className="flex flex-col  text-center">
+              <div key={key} className="flex flex-col  text-center">
                 <span className="text-muted-foreground">{item?.value}</span>
                 <span>{item?.label}</span>
               </div>
@@ -111,9 +110,9 @@ export const CauseDetail = () => {
 
         {/* User Information */}
         <div className="flex flex-wrap justify-between space-y-5 gap-x-10 text-sm">
-          {personalDetails?.map((item) => {
+          {personalDetails?.map((item, key) => {
             return (
-              <div className="flex flex-col  text-center">
+              <div key={key} className="flex flex-col  text-center">
                 <span className="text-muted-foreground">{item?.value}</span>
                 <span>{item?.label}</span>
               </div>

@@ -1,10 +1,11 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
-import { useRef, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Upload, Trash2, X } from "lucide-react";
+import { Trash2, Upload, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import FormField from "./form-field";
+import Image from "next/image";
 
 interface ImageUploadSectionProps {
   fieldName: string;
@@ -50,7 +51,9 @@ export default function ImageUploadSection({
 
           return (
             <div key={index} className="relative">
-              <img
+              <Image
+                width={128}
+                height={80}
                 src={previewUrl}
                 alt={`Uploaded Image ${index + 1}`}
                 className="h-20 w-32 object-cover rounded-md"

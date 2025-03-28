@@ -21,6 +21,7 @@ interface HeaderWrapperProps
   title: string;
   description?: string;
   actions?: React.ReactNode;
+  className?: string;
 }
 
 const HeaderWrapper = ({
@@ -29,9 +30,10 @@ const HeaderWrapper = ({
   description,
   actions,
   size,
+  className,
 }: HeaderWrapperProps) => {
   return (
-    <div className={cn(headerWrapperVariants({ size }))}>
+    <div className={cn(headerWrapperVariants({ size }), className)}>
       <div className="flex justify-between items-center">
         <div>
           <h1

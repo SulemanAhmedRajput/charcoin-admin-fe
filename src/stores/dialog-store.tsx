@@ -8,6 +8,7 @@ interface DialogState {
     | "community_news_add"
     | "community_user_wallet_add"
     | "community_administration_add"
+    | "nfts_add"
     | null;
 
   openDetail: () => void;
@@ -21,6 +22,7 @@ interface DialogState {
   setCommunityNewsAdd: (isOpen: boolean) => void;
   setCommunityUserWalletAdd: (isOpen: boolean) => void;
   setCommunityAdministrationAdd: (isOpen: boolean) => void;
+  setNtfsAdd: (isOpen: boolean) => void;
 }
 
 const useDialogStore = create<DialogState>((set) => ({
@@ -45,6 +47,7 @@ const useDialogStore = create<DialogState>((set) => ({
     set({ openDialog: isOpen ? "community_user_wallet_add" : null }),
   setCommunityAdministrationAdd: (isOpen) =>
     set({ openDialog: isOpen ? "community_administration_add" : null }),
+  setNtfsAdd: (isOpen) => set({ openDialog: isOpen ? "nfts_add" : null }),
 }));
 
 export default useDialogStore;

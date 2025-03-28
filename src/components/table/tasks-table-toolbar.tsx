@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "./tasks-table-view-options";
 
-import { DataTableFacetedFilter } from "./tasks-table-faceted-filter";
 import { TasksTableFloatingBar } from "./task-floating-bar";
 
 interface DataTableToolbarProps<TData> {

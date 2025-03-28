@@ -34,6 +34,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Image from "next/image";
 
 // Define the form validation schema using Zod
 const formSchema = z.object({
@@ -366,7 +367,7 @@ export function AddCauseForm() {
                         <TabsContent value="preview" className="mt-2">
                           {imagePreview ? (
                             <div className="relative w-full h-32 bg-zinc-800 rounded-lg overflow-hidden">
-                              <img
+                              <Image
                                 src={imagePreview || "/placeholder.svg"}
                                 alt="Preview"
                                 className="w-full h-full object-cover"
@@ -415,7 +416,7 @@ export function AddCauseForm() {
                       <FormItem>
                         <FormLabel>Role / Position</FormLabel>
                         <FormDescription className="text-zinc-500 text-xs">
-                          Enter the person's role/position in the organization.
+                          Enter the personapos;s role/position in the organization.
                         </FormDescription>
                         <FormControl>
                           <Input

@@ -24,7 +24,7 @@ export default function NotFound() {
             Houston, we have a problem!
           </h2>
           <p className="text-muted-foreground">
-            The page you're looking for has been lost in space or never existed.
+            The page you&apos;re looking for has been lost in space or never existed.
           </p>
         </div>
 

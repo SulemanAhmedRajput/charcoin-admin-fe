@@ -6,14 +6,8 @@ import { Search } from "lucide-react";
 
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
+
 import { TopTierTable } from "@/components/rewards/top-tier-table";
 import { TopTierColumn } from "@/components/columns/top-tier-column";
 
@@ -56,19 +50,30 @@ const transactionRecords: TransactionRecord[] = [
   },
 ];
 
-// ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
+// Function to filter transactions based on search and date
 const fetchTransactions = async (
   query = "",
-  month = "March 2025"
+  selectedDate: Date
 ): Promise<TransactionRecord[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const filtered = transactionRecords.filter(
-        (record) =>
+      const filtered = transactionRecords.filter((record) => {
+        const matchesSearch =
           record.username.toLowerCase().includes(query.toLowerCase()) ||
           record.wallet.toLowerCase().includes(query.toLowerCase()) ||
-          record.hash.toLowerCase().includes(query.toLowerCase())
-      );
+          record.hash.toLowerCase().includes(query.toLowerCase());
+
+        // Check if the record falls in the range
+        const startDate = new Date(1999, 0, 1);
+        const isWithinRange =
+          record.registration >= startDate &&
+          record.registration <= selectedDate &&
+          record.lastTransaction >= startDate &&
+          record.lastTransaction <= selectedDate;
+
+        return matchesSearch && isWithinRange;
+      });
+
       resolve(filtered);
     }, 500);
   });
@@ -76,11 +81,11 @@ const fetchTransactions = async (
 
 const TopTiers = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const { data = [], isLoading } = useQuery<TransactionRecord[]>({
-    queryKey: ["transactions", searchQuery, selectedMonth],
-    queryFn: () => fetchTransactions(searchQuery, selectedMonth),
+    queryKey: ["transactions", searchQuery, selectedDate],
+    queryFn: () => fetchTransactions(searchQuery, selectedDate),
   });
 
   return (
@@ -90,23 +95,10 @@ const TopTiers = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger
-              variant={"newly_secondary"}
-              className="w-[200px] !bg-[#3D3C44]"
-            >
-              <SelectValue placeholder="Select date" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="January 2025">January 2025</SelectItem>
-              <SelectItem value="February 2025">February 2025</SelectItem>
-              <SelectItem value="March 2025">March 2025</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <div className="relative  w-80 ">
+          <DateTimePicker date={selectedDate} setDate={setSelectedDate} />
+          <div className="relative w-80">
             <Input
-              className="!w-full !bg-[#3D3C44] "
+              className="!w-full !bg-[#3D3C44]"
               variant={"newly_secondary"}
               placeholder="Search by username, wallet, or hash"
               value={searchQuery}
@@ -117,7 +109,7 @@ const TopTiers = () => {
         </div>
 
         <TopTierTable
-          data={data} // ✅ Now `data` is always a TransactionRecord[]
+          data={data}
           columns={TopTierColumn}
           fetching={isLoading}
         />

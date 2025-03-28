@@ -15,6 +15,7 @@ export const dummyData: CauseFormData = {
   email: "josue.mendez@foundation.org",
   phone: "+505-9856-98745",
   status: "Published",
+  contractFile: "Final Formal Agreement - Nicaragua.pdf",
 };
 
 export const contractFile = "Final Formal Agreement - Nicaragua.pdf";

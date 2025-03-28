@@ -1,17 +1,8 @@
 import * as React from "react";
-import {
-  //   ArrowUpIcon,
-  //   CheckCircledIcon,
-  Cross2Icon,
-  //   DownloadIcon,
-  //   ReloadIcon,
-  //   TrashIcon,
-} from "@radix-ui/react-icons";
 // import { SelectTrigger } from "@radix-ui/react-select";
 import { type Table } from "@tanstack/react-table";
 // import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
 // import {
 //   Select,
 //   SelectContent,
@@ -19,18 +10,10 @@ import { Button } from "@/components/ui/button";
 //   SelectItem,
 // } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Kbd } from "@/components/kdb";
 
-// import { deleteTasks, updateTasks } from "../_lib/actions";
-import { Task } from "@/schemas/task.schema";
 
 interface TasksTableFloatingBarProps {
-  table: Table<Task>;
+  table: Table<any>;
 }
 
 export function TasksTableFloatingBar({ table }: TasksTableFloatingBarProps) {
@@ -62,7 +45,7 @@ export function TasksTableFloatingBar({ table }: TasksTableFloatingBarProps) {
               {rows.length} selected
             </span>
             <Separator orientation="vertical" className="ml-2 mr-1" />
-            <Tooltip>
+            {/* <Tooltip>
               <TooltipTrigger asChild>
                 <Button
                   variant="ghost"
@@ -82,7 +65,7 @@ export function TasksTableFloatingBar({ table }: TasksTableFloatingBarProps) {
                   Esc
                 </Kbd>
               </TooltipContent>
-            </Tooltip>
+            </Tooltip> */}
           </div>
           <Separator orientation="vertical" className="hidden h-5 sm:block" />
           {/* <div className="flex items-center gap-1.5">

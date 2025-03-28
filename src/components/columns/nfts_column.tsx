@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { DataTableColumnHeader } from "../table/tasks-table-column-header";
 import Image from "next/image";
+import { DataTableColumnHeader } from "../table/tasks-table-column-header";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 
@@ -13,6 +13,7 @@ export type TransactionRecord = {
   date: Date;
   preview: string;
 };
+
 
 const columns: ColumnDef<TransactionRecord>[] = [
   {
@@ -59,7 +60,7 @@ const columns: ColumnDef<TransactionRecord>[] = [
           variant={status === "Awarded" ? "pink" : "purple"}
           size={"lg"}
         >
-          {status as String}
+          {status as string}
         </Badge>
       );
     },

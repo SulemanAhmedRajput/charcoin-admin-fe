@@ -169,6 +169,9 @@ import { Button } from "@/components/ui/button";
 import { NFTSRecord } from "@/types/rewards";
 import { nftsColumns } from "@/components/columns/nfts_column";
 import { NftsTable } from "@/components/rewards/nfts-table";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import useDialogStore from "@/stores/dialog-store";
+import { CreateNfts } from "@/components/nfts/create-nfts";
 
 const transactionRecords: NFTSRecord[] = [
   {
@@ -248,6 +251,7 @@ const fetchTransactions = async (
 const TopTiers = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const { openDialog, setNtfsAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<NFTSRecord[]>({
     queryKey: ["ntfs", searchQuery, selectedMonth],
@@ -258,7 +262,11 @@ const TopTiers = () => {
     <HeaderWrapper
       title="Rewards - NFTs"
       description="NFT collections and distribution control"
-      actions={<Button size={"lg"}>Add new →</Button>}
+      actions={
+        <Button size={"lg"} onClick={() => setNtfsAdd(true)}>
+          Add new →
+        </Button>
+      }
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
@@ -293,6 +301,14 @@ const TopTiers = () => {
           columns={nftsColumns}
           fetching={isLoading}
         />
+        <CustomSheet
+          isOpen={openDialog == "nfts_add"}
+          setIsOpen={setNtfsAdd}
+          title="Edit Cause form"
+          className="pt-2 px-4"
+        >
+          <CreateNfts />
+        </CustomSheet>
       </div>
     </HeaderWrapper>
   );

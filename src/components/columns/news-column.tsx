@@ -1,9 +1,8 @@
+import { NewsArticle, NewsStatus } from "@/types/news";
+import { PlayCircleSolid } from "@mynaui/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../table/tasks-table-column-header";
-import { TransactionRecord } from "@/types/rewards";
-import { getOrdinalSuffix } from "@/lib/helper";
-import { NewsArticle, NewsStatus } from "@/types/news";
-import { PlayCircle, PlayCircleSolid } from "@mynaui/icons-react";
+import Image from "next/image";
 
 const columns: ColumnDef<NewsArticle>[] = [
   {
@@ -20,7 +19,9 @@ const columns: ColumnDef<NewsArticle>[] = [
     ),
     cell: ({ row }) => (
       <div className="relative flex justify-center items-center">
-        <img
+        <Image
+          width={128}
+          height={80}
           src={row.getValue("video_thumbnail")}
           alt="Video Thumbnail"
           className="h-24 w-20 rounded-md object-cover"

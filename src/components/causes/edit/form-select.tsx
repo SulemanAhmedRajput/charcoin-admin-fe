@@ -22,7 +22,7 @@ const selectVariants = cva(
         destructive:
           "border-destructive bg-destructive/10 text-destructive focus:ring-destructive",
         newly_secondary:
-          "!bg-accent border-none focus:ring-primary focus:ring-offset-2 focus:ring-2",
+          "!bg-accent border-none focus:ring-primary  focus:ring-offset-2 focus:ring-2",
       },
       selectSize: {
         sm: "h-8 text-sm px-2 py-1",
