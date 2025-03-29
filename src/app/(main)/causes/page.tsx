@@ -6,14 +6,8 @@ import { useState } from "react";
 
 import { AddCauseTable } from "@/components/causes/add-cause-table";
 import { runningCauseColumns } from "@/components/columns/running_cause_column";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Cause } from "@/types/causes";
 
@@ -97,25 +91,6 @@ const causes: Cause[] = [
   },
 ];
 
-// Create a column helper
-
-// Define columns
-
-// Fetch function for React Query
-// const fetchCauses = async (query = "") => {
-//   // In a real app, this would be an API call
-//   // For this example, we'll filter the dummy data
-//   return new Promise<Cause[]>((resolve) => {
-//     setTimeout(() => {
-//       const filteredCauses = causes.filter(
-//         (cause) =>
-//           cause.name.toLowerCase().includes(query.toLowerCase()) ||
-//           cause.organization.toLowerCase().includes(query.toLowerCase())
-//       );
-//       resolve(filteredCauses);
-//     }, 500);
-//   });
-// };
 
 const fetchCauses = async (query = "", tab = "running") => {
   return new Promise<Cause[]>((resolve) => {
@@ -135,7 +110,7 @@ const fetchCauses = async (query = "", tab = "running") => {
 
 export default function CausesPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [date, setDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState("running");
 
   // React Query for fetching causes
@@ -161,16 +136,7 @@ export default function CausesPage() {
             </TabsList>
 
             <div className="flex items-center gap-4 mb-4">
-              <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-                <SelectTrigger className="w-[200px] !bg-[#3D3C44]">
-                  <SelectValue placeholder="Select date" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="January 2025">January 2025</SelectItem>
-                  <SelectItem value="February 2025">February 2025</SelectItem>
-                  <SelectItem value="March 2025">March 2025</SelectItem>
-                </SelectContent>
-              </Select>
+          <DateTimePicker date={date} setDate={setDate} />
 
               <div className="relative w-80">
                 <Input

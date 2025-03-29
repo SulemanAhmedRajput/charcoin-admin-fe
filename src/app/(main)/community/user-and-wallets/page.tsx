@@ -4,25 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-import { NewsColumn } from "@/components/columns/news-column";
-import { NewsTable } from "@/components/community/news-table";
-import { HeaderWrapper } from "@/components/custom/header-wrapper";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { NewsArticle } from "@/types/news";
-import { UserStatus, UserWallet } from "@/types/user-and-wallet";
-import { UserWalletTable } from "@/components/community/user-wallet-table";
 import { UserWalletColumns } from "@/components/columns/user-wallet-column";
-import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
-import useDialogStore from "@/stores/dialog-store";
 import { AddUserWallet } from "@/components/community/add-user-wallet";
+import { UserWalletTable } from "@/components/community/user-wallet-table";
+import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import { Button } from "@/components/ui/button";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
+import { Input } from "@/components/ui/input";
+import useDialogStore from "@/stores/dialog-store";
+import { UserStatus, UserWallet } from "@/types/user-and-wallet";
 const newsExample: UserWallet[] = [
   {
     id: 12458,
@@ -62,7 +53,7 @@ const newsExample: UserWallet[] = [
 // ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
 const fetchTransactions = async (
   query = "",
-  month = "March 2025"
+  month = new Date()
 ): Promise<UserWallet[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -79,12 +70,12 @@ const fetchTransactions = async (
 
 const News = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [date, setDate] = useState<Date>(new Date);
   const { openDialog, setCommunityUserWalletAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<UserWallet[]>({
-    queryKey: ["user-wallet", searchQuery, selectedMonth],
-    queryFn: () => fetchTransactions(searchQuery, selectedMonth),
+    queryKey: ["user-wallet", searchQuery, date],
+    queryFn: () => fetchTransactions(searchQuery, date),
   });
 
   return (
@@ -104,19 +95,8 @@ const News = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger
-              variant={"newly_secondary"}
-              className="w-[200px] !bg-[#3D3C44]"
-            >
-              <SelectValue placeholder="Select date" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="January 2025">January 2025</SelectItem>
-              <SelectItem value="February 2025">February 2025</SelectItem>
-              <SelectItem value="March 2025">March 2025</SelectItem>
-            </SelectContent>
-          </Select>
+          <DateTimePicker date = {date  } setDate={setDate} />
+        
 
           <div className="relative  w-80 ">
             <Input

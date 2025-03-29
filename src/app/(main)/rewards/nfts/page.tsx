@@ -149,29 +149,20 @@
 
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
+import { useState } from "react";
 
-import { HeaderWrapper } from "@/components/custom/header-wrapper";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TopTierTable } from "@/components/rewards/top-tier-table";
-import { TopTierColumn } from "@/components/columns/top-tier-column";
-import { Button } from "@/components/ui/button";
-import { NFTSRecord } from "@/types/rewards";
 import { nftsColumns } from "@/components/columns/nfts_column";
-import { NftsTable } from "@/components/rewards/nfts-table";
-import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
-import useDialogStore from "@/stores/dialog-store";
+import { HeaderWrapper } from "@/components/custom/header-wrapper";
 import { CreateNfts } from "@/components/nfts/create-nfts";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import { NftsTable } from "@/components/rewards/nfts-table";
+import { Button } from "@/components/ui/button";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
+import { Input } from "@/components/ui/input";
+import useDialogStore from "@/stores/dialog-store";
+import { NFTSRecord } from "@/types/rewards";
 
 const transactionRecords: NFTSRecord[] = [
   {
@@ -233,7 +224,7 @@ const transactionRecords: NFTSRecord[] = [
 // ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
 const fetchTransactions = async (
   query = "",
-  month = "March 2025"
+  month = new Date()
 ): Promise<NFTSRecord[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -250,12 +241,12 @@ const fetchTransactions = async (
 
 const TopTiers = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [date, setDate] = useState<Date>(new Date());
   const { openDialog, setNtfsAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<NFTSRecord[]>({
-    queryKey: ["ntfs", searchQuery, selectedMonth],
-    queryFn: () => fetchTransactions(searchQuery, selectedMonth),
+    queryKey: ["ntfs", searchQuery, date],
+    queryFn: () => fetchTransactions(searchQuery, date),
   });
 
   return (
@@ -270,20 +261,7 @@ const TopTiers = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger
-              variant={"newly_secondary"}
-              className="w-[200px] !bg-[#3D3C44]"
-            >
-              <SelectValue placeholder="Select date" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="January 2025">January 2025</SelectItem>
-              <SelectItem value="February 2025">February 2025</SelectItem>
-              <SelectItem value="March 2025">March 2025</SelectItem>
-            </SelectContent>
-          </Select>
-
+          <DateTimePicker date={date} setDate={setDate} />
           <div className="relative  w-80 ">
             <Input
               className="!w-full !bg-[#3D3C44] "
