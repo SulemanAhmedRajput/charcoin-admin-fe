@@ -103,7 +103,7 @@ export function getMenuList(): Group[] {
               icon: Hash,
             },
             {
-              href: "/settings/Governance",
+              href: "/settings/governance",
               label: "Governance",
               icon: Hash,
             },
