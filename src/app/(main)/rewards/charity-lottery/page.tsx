@@ -1,21 +1,14 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
+import { useState } from "react";
 
-import { HeaderWrapper } from "@/components/custom/header-wrapper";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TopTierTable } from "@/components/rewards/top-tier-table";
 import { TopTierColumn } from "@/components/columns/top-tier-column";
+import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { TopTierTable } from "@/components/rewards/top-tier-table";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
+import { Input } from "@/components/ui/input";
 
 // Define a type for transactions
 type TransactionRecord = {
@@ -59,7 +52,7 @@ const transactionRecords: TransactionRecord[] = [
 // ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
 const fetchTransactions = async (
   query = "",
-  month = "March 2025"
+  month = new Date()
 ): Promise<TransactionRecord[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -76,11 +69,11 @@ const fetchTransactions = async (
 
 const TopTiers = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [date, setDate] = useState<Date>(new Date());
 
   const { data = [], isLoading } = useQuery<TransactionRecord[]>({
-    queryKey: ["transactions", searchQuery, selectedMonth],
-    queryFn: () => fetchTransactions(searchQuery, selectedMonth),
+    queryKey: ["transactions", searchQuery, date],
+    queryFn: () => fetchTransactions(searchQuery, date),
   });
 
   return (
@@ -90,19 +83,7 @@ const TopTiers = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger
-              variant={"newly_secondary"}
-              className="w-[200px] !bg-[#3D3C44]"
-            >
-              <SelectValue placeholder="Select date" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="January 2025">January 2025</SelectItem>
-              <SelectItem value="February 2025">February 2025</SelectItem>
-              <SelectItem value="March 2025">March 2025</SelectItem>
-            </SelectContent>
-          </Select>
+          <DateTimePicker date={date} setDate={setDate} />
 
           <div className="relative  w-80 ">
             <Input

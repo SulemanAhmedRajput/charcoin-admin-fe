@@ -5,21 +5,15 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { NewsColumn } from "@/components/columns/news-column";
+import AddNewNews from "@/components/community/add-new-news";
 import { NewsTable } from "@/components/community/news-table";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { NewsArticle, NewsData, NewsStatus } from "@/types/news";
 import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
-import AddNewNews from "@/components/community/add-new-news";
+import { Button } from "@/components/ui/button";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
+import { Input } from "@/components/ui/input";
 import useDialogStore from "@/stores/dialog-store";
+import { NewsArticle, NewsData, NewsStatus } from "@/types/news";
 
 const newsExample: NewsData = {
   news_summary: {
@@ -92,7 +86,7 @@ const newsExample: NewsData = {
 // ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
 const fetchTransactions = async (
   query = "",
-  month = "March 2025"
+  month = new Date()
 ): Promise<NewsArticle[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -109,12 +103,12 @@ const fetchTransactions = async (
 
 const News = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("March 2025");
+  const [date, setDate] = useState<Date>(new Date()); 
   const { openDialog, setCommunityNewsAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<NewsArticle[]>({
-    queryKey: ["news", searchQuery, selectedMonth],
-    queryFn: () => fetchTransactions(searchQuery, selectedMonth),
+    queryKey: ["news", searchQuery, date],
+    queryFn: () => fetchTransactions(searchQuery, date),
   });
 
   return (
@@ -134,20 +128,8 @@ const News = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <Select value={selectedMonth} onValueChange={setSelectedMonth}>
-            <SelectTrigger
-              variant={"newly_secondary"}
-              className="w-[200px] !bg-[#3D3C44]"
-            >
-              <SelectValue placeholder="Select date" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="January 2025">January 2025</SelectItem>
-              <SelectItem value="February 2025">February 2025</SelectItem>
-              <SelectItem value="March 2025">March 2025</SelectItem>
-            </SelectContent>
-          </Select>
-
+          <DateTimePicker date={date  } setDate={setDate} />
+         
           <div className="relative  w-80 ">
             <Input
               className="!w-full !bg-[#3D3C44] "
