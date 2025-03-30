@@ -1,13 +1,15 @@
 import { Search } from "@mynaui/icons-react";
 import { Input } from "../ui/input";
+import { cn } from "@/lib/utils";
 
 interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement>{
+  rootClassName?: string;
 
 }
 
-const SearchInput = ({ placeholder, value, onChange }: SearchInputProps) => {
+const SearchInput = ({ placeholder, value, onChange, rootClassName }: SearchInputProps) => {
   return (
-    <div className="relative max-w-80">
+    <div className={cn("relative  w-80", rootClassName)}>
       <Input
       variant={"newly_secondary"}
         placeholder={placeholder}

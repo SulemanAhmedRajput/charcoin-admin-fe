@@ -11,6 +11,7 @@ import { Card } from "@/components/ui/card";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { Input } from "@/components/ui/input";
 import { StakingData, StakingEntry } from "@/types/staking";
+import { SearchInput } from "@/components/reuseable/search-input";
 
 // Example Data
 const stakingExample: StakingData = {
@@ -151,16 +152,8 @@ const TopTiers = () => {
         <div className="flex items-center gap-4 mb-4">
           <DateTimePicker date={date} setDate={setDate} />
         
-          <div className="relative  w-80 ">
-            <Input
-              className="!w-full !bg-[#3D3C44] "
-              variant={"newly_secondary"}
-              placeholder="Search by username, wallet, or hash"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          </div>
+        <SearchInput placeholder="Search by username, wallet, or hash" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+        
         </div>
 
         <StakingTable
