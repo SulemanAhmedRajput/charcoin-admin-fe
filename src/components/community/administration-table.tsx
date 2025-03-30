@@ -25,6 +25,9 @@ import {
 // import { DataTableToolbar } from "../table/tasks-table-toolbar";
 import { Fetching } from "../reuseable/fetching";
 import { DataTablePagination } from "../table/tasks-table-pagination";
+import { CustomSheet } from "../reuseable/add-causes-sheet";
+import { EditAdministrator } from "./edit-administration";
+import useDialogStore from "@/stores/dialog-store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -37,6 +40,11 @@ export function AdministrationTable<TData, TValue>({
   data,
   fetching,
 }: DataTableProps<TData, TValue>) {
+  const {
+    setEditAdministrator,
+
+    openDialog,
+  } = useDialogStore();
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -96,6 +104,7 @@ export function AdministrationTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   onClick={() => {
+                    setEditAdministrator(true);
                     console.log("Clicked");
                   }}
                   // row.original?._id! ??
@@ -138,6 +147,14 @@ export function AdministrationTable<TData, TValue>({
       <div className="px-5">
         <DataTablePagination table={table} />
       </div>
+      <CustomSheet
+        isOpen={openDialog === "edit_administrator"}
+        setIsOpen={setEditAdministrator}
+        title="See the Cause Detail"
+        className="!p-0"
+      >
+        <EditAdministrator />
+      </CustomSheet>
     </div>
   );
 }

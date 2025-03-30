@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 const headerWrapperVariants = cva("mb-6", {
   variants: {
     size: {
+      xs: "text-xs space-y-0.5",
       sm: "text-sm space-y-1",
       md: "text-base space-y-2",
       lg: "text-lg space-y-3",
@@ -39,7 +40,9 @@ const HeaderWrapper = ({
           <h1
             className={cn(
               "font-semibold",
-              size === "sm"
+              size === "xs"
+                ? "text-sm"
+                : size === "sm"
                 ? "text-lg"
                 : size === "lg"
                 ? "text-3xl"

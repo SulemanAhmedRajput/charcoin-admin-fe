@@ -1,9 +1,20 @@
-interface FormSectionTitleProps {
+import React from "react";
+
+interface FormSectionTitleProps
+  extends React.HTMLAttributes<HTMLHeadingElement> {
   title: string;
 }
 
-export default function FormSectionTitle({ title }: FormSectionTitleProps) {
+export default function FormSectionTitle({
+  title,
+  ...props
+}: FormSectionTitleProps) {
   return (
-    <h2 className="text-xl mb-4 border-b border-gray-700 pb-2">{title}</h2>
+    <>
+      <h2 className="text-xl mb-4  pb-2" {...props}>
+        {title}
+      </h2>
+      <hr className="col-span-2 border-b border-custom-slate mb-2" />
+    </>
   );
 }

@@ -23,7 +23,7 @@ const personalDetails = [
 
 export const CauseDetail = () => {
   const { setCausesOpenEdit } = useDialogStore();
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
   return (
     <div >
       <Image
