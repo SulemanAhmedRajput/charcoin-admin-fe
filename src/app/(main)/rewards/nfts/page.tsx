@@ -1,20 +1,18 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { nftsColumns } from "@/components/columns/nfts_column";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
-import { CreateNfts } from "@/components/nfts/create-nfts";
+import { CreateNftsTwo } from "@/components/nfts/create-nfts-02";
 import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import { SearchInput } from "@/components/reuseable/search-input";
 import { NftsTable } from "@/components/rewards/nfts-table";
 import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { Input } from "@/components/ui/input";
 import useDialogStore from "@/stores/dialog-store";
 import { NFTSRecord } from "@/types/rewards";
-import { SearchInput } from "@/components/reuseable/search-input";
 
 const transactionRecords: NFTSRecord[] = [
   {
@@ -112,7 +110,7 @@ const TopTiers = () => {
       }
     >
       <div className="mb-6 ">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 max-md:flex-col">
           <DateTimePicker date={date} setDate={setDate} />
           <SearchInput
             placeholder="Search by username, wallet, or hash"
@@ -132,7 +130,7 @@ const TopTiers = () => {
           title="Edit Cause form"
           className="pt-2 px-4"
         >
-          <CreateNfts />
+          <CreateNftsTwo />
         </CustomSheet>
       </div>
     </HeaderWrapper>

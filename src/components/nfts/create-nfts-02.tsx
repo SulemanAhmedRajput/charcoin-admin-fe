@@ -4,16 +4,21 @@ import { useForm, FormProvider } from "react-hook-form";
 import FormField from "../causes/edit/form-field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { nftSchema, NftsSchemaType } from "@/schemas/nfts-schema";
+import {
+  nftSchema,
+  nftSchemaWithWallet,
+  NftsSchemaType,
+  NftsSchemaWithWalletType,
+} from "@/schemas/nfts-schema";
 import ImageUploadSection from "../causes/edit/field-upload-section";
 import { SelectField } from "../causes/edit/form-select";
 import { HeaderWrapper } from "../custom/header-wrapper";
 import FormSectionTitle from "../causes/edit/form-section-title";
 import { ArrowRight } from "lucide-react";
 
-export const CreateNfts = () => {
-  const form = useForm<NftsSchemaType>({
-    resolver: yupResolver(nftSchema),
+export const CreateNftsTwo = () => {
+  const form = useForm<NftsSchemaWithWalletType>({
+    resolver: yupResolver(nftSchemaWithWallet),
     defaultValues: dummyData,
   });
 
@@ -24,7 +29,7 @@ export const CreateNfts = () => {
     getValues,
   } = form;
 
-  const onSubmit = (data: NftsSchemaType) => {
+  const onSubmit = (data: NftsSchemaWithWalletType) => {
     console.log(data);
   };
 
@@ -106,25 +111,17 @@ export const CreateNfts = () => {
             {/* Campaign Selection */}
             <FormField
               id="campaign"
-              label="Campaign"
-              description="Choose the campaign where this NFT will be awarded"
-              error={errors.campaign?.message}
+              label="SOLANA Wallet"
+              description="Enter the Wallet to be transferred to after minting"
+              error={errors.wallet?.message}
             >
-              <SelectField
-                variant={"newly_secondary"}
-                selectSize={"lg"}
-                placeholder="Select Campaign"
-                value={getValues().campaign}
-                onValueChange={(value) => setValue("campaign", value)}
-                options={[
-                  {
-                    value: "April 2025",
-                    label: "April 2025 (Apr 1 to Apr 30)",
-                  },
-                  { value: "May 2025", label: "May 2025 (May 1 to May 31)" },
-                  { value: "June 2025", label: "June 2025 (Jun 1 to Jun 30)" },
-                ]}
-              />
+              <Input
+                variant="newly_secondary"
+                inputSize="lg"
+                id="description"
+                className="bg-gray-800 border-gray-700 text-white"
+                {...register("wallet")}
+              />{" "}
             </FormField>
           </div>
 

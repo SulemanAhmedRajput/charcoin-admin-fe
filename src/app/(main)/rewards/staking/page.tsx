@@ -1,17 +1,15 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { stakingColumns } from "@/components/columns/staking_column";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { SearchInput } from "@/components/reuseable/search-input";
 import { StakingTable } from "@/components/rewards/staking-table";
 import { Card } from "@/components/ui/card";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { Input } from "@/components/ui/input";
 import { StakingData, StakingEntry } from "@/types/staking";
-import { SearchInput } from "@/components/reuseable/search-input";
 
 // Example Data
 const stakingExample: StakingData = {
@@ -149,11 +147,14 @@ const TopTiers = () => {
       }
     >
       <div className="mb-6 ">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 max-md:flex-col">
           <DateTimePicker date={date} setDate={setDate} />
-        
-        <SearchInput placeholder="Search by username, wallet, or hash" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-        
+
+          <SearchInput
+            placeholder="Search by username, wallet, or hash"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
 
         <StakingTable

@@ -1,15 +1,13 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
 import { useState } from "react";
 
 import { TopTierColumn } from "@/components/columns/top-tier-column";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { SearchInput } from "@/components/reuseable/search-input";
 import { TopTierTable } from "@/components/rewards/top-tier-table";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
-import { Input } from "@/components/ui/input";
-import { SearchInput } from "@/components/reuseable/search-input";
 
 // Define a type for transactions
 type TransactionRecord = {
@@ -83,7 +81,7 @@ const TopTiers = () => {
       description="Showing the top 10 users with the most volume in the selected period"
     >
       <div className="mb-6 ">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 max-md:flex-col">
           <DateTimePicker date={date} setDate={setDate} />
 
           <SearchInput

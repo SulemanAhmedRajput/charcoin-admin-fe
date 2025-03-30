@@ -3,6 +3,9 @@ import { DownloadSolid, Edit } from "@mynaui/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { HeaderWrapper } from "../custom/header-wrapper";
 
 const details = [
   { label: "Country", value: "Nicaragua" },
@@ -20,8 +23,9 @@ const personalDetails = [
 
 export const CauseDetail = () => {
   const { setCausesOpenEdit } = useDialogStore();
+  const [isEdit, setIsEdit] = useState(false);
   return (
-    <div>
+    <div >
       <Image
         src={"/board.svg"}
         alt="board"
@@ -124,13 +128,21 @@ export const CauseDetail = () => {
         <Button
           size={"lg"}
           onClick={() => setCausesOpenEdit(true)}
-          className="text-lg ml-auto"
+          className={cn("text-lg ml-auto", !isEdit && "hidden")}
           rounded={"xl"}
         >
           Edit
           <Edit className="!w-6 !h-6" />
         </Button>
+
+        <HeaderWrapper
+        size={"sm"}
+        title={<div className="font-normal tracking-wider">Updates - <span className="text-muted-foreground">Professional Media by CharCoin</span></div>}
+        description={<span className="text-xs">Videos uploaded in this section will show up to all benefactors that voted for this project.</span>}
+       
+        />
       </div>
+
     </div>
   );
 };

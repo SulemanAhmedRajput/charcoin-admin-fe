@@ -18,8 +18,8 @@ const headerWrapperVariants = cva("mb-6", {
 interface HeaderWrapperProps
   extends VariantProps<typeof headerWrapperVariants> {
   children?: React.ReactNode;
-  title: string;
-  description?: string;
+  title: string | React.ReactNode;
+  description?: string | React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
 }

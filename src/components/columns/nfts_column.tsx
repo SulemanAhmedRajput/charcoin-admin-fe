@@ -3,6 +3,7 @@ import Image from "next/image";
 import { DataTableColumnHeader } from "../table/tasks-table-column-header";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export type TransactionRecord = {
   username: string;
@@ -55,13 +56,11 @@ const columns: ColumnDef<TransactionRecord>[] = [
     cell: ({ row }) => {
       const status = row.getValue("status");
       return (
-        <Badge
-          className="whitespace-nowrap"
-          variant={status === "Awarded" ? "pink" : "purple"}
-          size={"lg"}
+        <span
+          className={cn("whitespace-nowrap text-xs", status == "Awarded" ? "text-custom-green": "text-muted-foreground")}
         >
           {status as string}
-        </Badge>
+        </span>
       );
     },
   },
@@ -70,9 +69,19 @@ const columns: ColumnDef<TransactionRecord>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type of Award" />
     ),
-    cell: ({ row }) => (
-      <span className="font-medium">{row.getValue("typeOfAward")}</span>
-    ),
+    cell: ({ row }) => {
+      const typeOfAward = row.getValue("typeOfAward");
+  
+      
+      return (
+        <Badge
+        className="whitespace-nowrap"
+        variant={typeOfAward === "Campaign Winner" ? "pink" : "purple"}
+        size={"lg"}
+      >
+        {typeOfAward as string}
+      </Badge>    )
+    },
   },
   {
     accessorKey: "date",

@@ -26,6 +26,7 @@ export default {
           "card-04": "#F1DFDE",
           yellow: "hsl(41, 99%, 51%)",
           purple: "hsl(273, 62%, 63%)",
+          green: "hsl(120, 87%, 69%)"
         },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

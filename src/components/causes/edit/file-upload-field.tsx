@@ -1,10 +1,10 @@
 "use client";
 
-import { useFormContext } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Upload, Trash2 } from "lucide-react";
-import FormField from "./form-field";
+import { Trash2, Upload } from "lucide-react";
 import { useRef } from "react";
+import { useFormContext } from "react-hook-form";
+import FormField from "./form-field";
 
 interface FileUploadSectionProps {
   fieldName: string;
@@ -63,9 +63,8 @@ export default function FileUploadSection({
 
         <Button
           type="button"
-          variant="destructive"
           size={"lg"}
-          className="bg-red-500 text-foreground hover:bg-red-400/10 flex items-center gap-2"
+          variant="destructive"
           onClick={handleFileDelete}
           disabled={!file}
         >

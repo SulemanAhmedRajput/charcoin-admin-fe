@@ -17,7 +17,7 @@ body {
     --card-foreground: 222.2 84% 4.9%;
     --popover: 252 8% 12%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 73 100% 61%;
+    --primary: 173 100% 61%;
     --primary-foreground: 210 40% 98%;
     --secondary: 250 7% 16%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -58,7 +58,7 @@ body {
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 248 6% 25%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 355 90% 51%;
+    --destructive: 0 84% 60%; 
     --destructive-foreground: 210 40% 98%;
     --border: 255 6% 14%;
     --input: 0 0% 22%;
@@ -85,7 +85,7 @@ body {
 /* Scrollbar styling  */
 
 
- 
+
 
 *::-webkit-scrollbar {
   width: var(--sb-size)
