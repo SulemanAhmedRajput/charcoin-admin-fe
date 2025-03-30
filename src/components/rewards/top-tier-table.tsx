@@ -68,11 +68,11 @@ export function TopTierTable<TData, TValue>({
   });
 
   return (
-    <div className="space-y-4 bg-background pb-5 rounded-xl">
+    <div className="space-y-4 bg-background !m-0 pb-5  rounded-xl">
       {/* <DataTableToolbar table={table} /> */}
       <div className="rounded-md border bg-background ">
         {/* <ScrollArea> */}
-        <Table>
+        <Table className="!m-0">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

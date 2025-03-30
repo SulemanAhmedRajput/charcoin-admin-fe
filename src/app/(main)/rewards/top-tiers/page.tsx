@@ -10,6 +10,8 @@ import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 import { TopTierTable } from "@/components/rewards/top-tier-table";
 import { TopTierColumn } from "@/components/columns/top-tier-column";
+import InputWithText from "@/components/ui/input-with-text";
+import { SearchInput } from "@/components/reuseable/search-input";
 
 // Define a type for transactions
 type TransactionRecord = {
@@ -89,23 +91,16 @@ const TopTiers = () => {
   });
 
   return (
-    <HeaderWrapper
+    <div >
+       <HeaderWrapper
       title="Rewards - Top Tiers"
       description="Showing the top 10 users with the most volume in the selected period"
-    >
+    />
       <div className="mb-6 ">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 max-md:flex-col">
           <DateTimePicker date={selectedDate} setDate={setSelectedDate} />
-          <div className="relative w-80">
-            <Input
-              className="!w-full !bg-[#3D3C44]"
-              variant={"newly_secondary"}
-              placeholder="Search by username, wallet, or hash"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          </div>
+          <SearchInput placeholder="Search by username, wallet, or hash" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+         
         </div>
 
         <TopTierTable
@@ -114,7 +109,7 @@ const TopTiers = () => {
           fetching={isLoading}
         />
       </div>
-    </HeaderWrapper>
+   </div>
   );
 };
 

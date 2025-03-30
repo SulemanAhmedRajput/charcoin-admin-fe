@@ -91,7 +91,6 @@ const causes: Cause[] = [
   },
 ];
 
-
 const fetchCauses = async (query = "", tab = "running") => {
   return new Promise<Cause[]>((resolve) => {
     setTimeout(() => {
@@ -120,7 +119,7 @@ export default function CausesPage() {
   });
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 ">
       <h1 className="text-2xl font-bold mb-6">Causes</h1>
 
       <div className="mb-6">
@@ -128,15 +127,15 @@ export default function CausesPage() {
           defaultValue="running"
           onValueChange={(value) => setActiveTab(value)}
         >
-          <div className="flex items-end gap-4">
+          <div className="flex items-end gap-4 max-md:flex-col">
             <TabsList className="!bg-custom-slate">
               <TabsTrigger value="running">Running</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
               <TabsTrigger value="drafts">Drafts</TabsTrigger>
             </TabsList>
 
-            <div className="flex items-center gap-4 mb-4">
-          <DateTimePicker date={date} setDate={setDate} />
+            <div className="flex items-center gap-4 mb-4 max-md:flex-col">
+              <DateTimePicker date={date} setDate={setDate} />
 
               <div className="relative w-80">
                 <Input
@@ -151,13 +150,25 @@ export default function CausesPage() {
           </div>
 
           <TabsContent value="running">
-            <AddCauseTable data={data} columns={runningCauseColumns} fetching={isLoading} />
+            <AddCauseTable
+              data={data}
+              columns={runningCauseColumns}
+              fetching={isLoading}
+            />
           </TabsContent>
           <TabsContent value="completed">
-            <AddCauseTable data={data} columns={runningCauseColumns} fetching={isLoading} />
+            <AddCauseTable
+              data={data}
+              columns={runningCauseColumns}
+              fetching={isLoading}
+            />
           </TabsContent>
           <TabsContent value="drafts">
-            <AddCauseTable data={data} columns={runningCauseColumns} fetching={isLoading} />
+            <AddCauseTable
+              data={data}
+              columns={runningCauseColumns}
+              fetching={isLoading}
+            />
           </TabsContent>
         </Tabs>
       </div>
