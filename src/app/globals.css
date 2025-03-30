@@ -35,6 +35,17 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --slate: 0 0% 60%;
+    --bprogress-color: #29d;
+  --bprogress-height: 2px;
+  --bprogress-spinner-size: 50px;
+  --bprogress-spinner-animation-duration: 400ms;
+  --bprogress-spinner-border-size: 2px;
+  --bprogress-box-shadow: 0 0 10px var(--bprogress-color), 0 0 5px var(--bprogress-color);
+  --bprogress-z-index: 99999;
+  --bprogress-spinner-top: 45px;
+  --bprogress-spinner-bottom: auto;
+  --bprogress-spinner-right: 45px;
+  --bprogress-spinner-left: auto;
   }
   .dark {
     --background: 252 8% 12%;
@@ -73,3 +84,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+
+/* styles/globals.css */
+
