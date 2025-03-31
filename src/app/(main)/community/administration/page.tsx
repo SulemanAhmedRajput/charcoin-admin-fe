@@ -14,6 +14,7 @@ import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { Input } from "@/components/ui/input";
 import useDialogStore from "@/stores/dialog-store";
 import { Administration } from "@/types/administration";
+import { AddAdministrator } from "@/components/community/add-adminstration";
 
 const administration: Administration[] = [
   {
@@ -144,7 +145,7 @@ const AdministrationPage = () => {
         title="Edit Cause form"
         className="pt-2 px-4"
       >
-        Case
+        <AddAdministrator />
       </CustomSheet>
     </HeaderWrapper>
   );
