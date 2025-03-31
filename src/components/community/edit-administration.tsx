@@ -1,380 +1,6 @@
-// import { dummyData } from "@/lib/dummy-data";
-// import { administrators, Administrator } from "@/schemas/adminstration-schema";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import { Form, useForm, FormProvider } from "react-hook-form";
-// import { Input } from "../ui/input";
-// import FormSectionTitle from "../causes/edit/form-section-title";
-// import FormField from "../causes/edit/form-field";
-// import { HeaderWrapper } from "../custom/header-wrapper";
-// import Image from "next/image";
-// import { Switch } from "../ui/switch";
-// import { useState } from "react";
-// import { Button } from "../ui/button";
-// import { Trash2 } from "lucide-react";
-
-// export const EditAdministrator = () => {
-//     // Initialize form with validation schema
-//     const form = useForm<Administrator>({
-//       resolver: yupResolver(administrators),
-//       defaultValues: dummyData,
-//     });
-
-//     const {
-//       register,
-//       handleSubmit,
-//       formState: { errors },
-//       setValue,
-//       getValues,
-//       trigger, // For manual revalidation
-//     } = form;
-
-//     // Handle form submission
-//     const onSubmit = (data: Administrator) => {
-//       console.log("Form Data:", data);
-//       // Implement API call to update administrator here
-//     };
-
-//     // State for managing toggle switches
-//     const [permissions, setPermissions] = useState({
-//       dashboard: false,
-//       causes: {
-//         view: false,
-//         create: false,
-//         update: false,
-//         delete: false,
-//       },
-//       rewards: {
-//         topTier: { view: false },
-//         charityLottery: { view: false },
-//         nfts: { view: false, create: false },
-//         staking: { view: false },
-//       },
-//       community: {
-//         news: {
-//           view: false,
-//           create: false,
-//           update: false,
-//           delete: false,
-//         },
-//         users: {
-//           view: false,
-//           blockUnblock: false,
-//         },
-//         administrators: {
-//           view: false,
-//           create: false,
-//           update: false,
-//           updateOwnAccount: false,
-//           delete: false,
-//         },
-//       },
-//       dappGlobalSettings: {
-//         causes: false,
-//         governance: false,
-//         rewards: false,
-//         walletsManagement: false,
-//       },
-//     });
-
-//     // Function to handle toggle switch changes
-//     const handleToggle = async (path: string) => {
-//         setPermissions((prev) => {
-//           // Deep copy to ensure React state updates correctly
-//           const newPermissions = JSON.parse(JSON.stringify(prev));
-
-//           const keys = path.split(".");
-//           let current: any = newPermissions;
-
-//           // Navigate to the nested property
-//           for (let i = 0; i < keys.length - 1; i++) {
-//             if (!current[keys[i]]) current[keys[i]] = {}; // Ensure path exists
-//             current = current[keys[i]];
-//           }
-
-//           // Toggle the value
-//           current[keys[keys.length - 1]] = !current[keys[keys.length - 1]];
-
-//           // Update form state
-//           setValue(`permissions.${path}`, current[keys[keys.length - 1]]);
-
-//           return newPermissions;
-//         });
-
-//         // Revalidate the form after updating permissions
-//         await trigger(`permissions.${path}`);
-//       };
-
-//     return (
-//       <div className="px-5">
-//         {/* Header */}
-//         <div className="mx-8 mt-2">
-//           <HeaderWrapper
-//             title="Edit Administrator"
-//             description="Edit administrator details"
-//             size={"xs"}
-//           />
-//         </div>
-
-//         {/* Form Provider */}
-//         <FormProvider {...form}>
-//           <form onSubmit={handleSubmit(onSubmit)}>
-//             <div className="mb-8 grid grid-cols-2 max-md:grid-cols-1 gap-4">
-//               {/* Main Details Section */}
-//               <FormSectionTitle title="Main details" className="col-span-2" />
-
-//               </div>
-
-//               {/* Permissions Section */}
-//               <FormSectionTitle title="Permissions" className="col-span-2" />
-//               <p className="text-muted-foreground col-span-2 text-xs">
-//                 Select all the permissions that will be available for this user in
-//                 the private administration area of the CharCoin ecosystem
-//               </p>
-//               <div className="col-span-2">
-//                 {/* Dashboard */}
-//                 <div className="border-b border-gray-800 py-3">
-//                   <div className="flex items-center gap-4">
-//                     <span>Dashboard</span>
-//                     <Switch
-//                       checked={permissions.dashboard}
-//                       onCheckedChange={() => handleToggle("dashboard")}
-//                     />
-//                   </div>
-//                 </div>
-
-//                 {/* Causes */}
-//                 <div className="border-b border-gray-800 py-3">
-//                   <div className="flex items-center gap-4">
-//                     <span>
-//                       Causes{" "}
-//                       <span className="text-xs text-gray-400">(View)</span>
-//                     </span>
-//                     <Switch
-//                       checked={permissions.causes.view}
-//                       onCheckedChange={() => handleToggle("causes.view")}
-//                     />
-//                   </div>
-//                   {permissions.causes.view && (
-//                     <div className="ml-6 mt-2 space-y-2 flex gap-8">
-//                       <div className="flex items-center gap-2">
-//                         <span>Create</span>
-//                         <Switch
-//                           checked={permissions.causes.create}
-//                           onCheckedChange={() => handleToggle("causes.create")}
-//                         />
-//                       </div>
-//                       <div className="flex items-center gap-2">
-//                         <span>Update</span>
-//                         <Switch
-//                           checked={permissions.causes.update}
-//                           onCheckedChange={() => handleToggle("causes.update")}
-//                         />
-//                       </div>
-//                       <div className="flex items-center gap-2">
-//                         <span>Delete</span>
-//                         <Switch
-//                           checked={permissions.causes.delete}
-//                           onCheckedChange={() => handleToggle("causes.delete")}
-//                         />
-//                       </div>
-//                     </div>
-//                   )}
-//                 </div>
-
-//                 {/* Rewards */}
-//                 <div className="border-b border-gray-800 py-3">
-//                   <div className="flex items-center gap-4">
-//                     <span>Rewards</span>
-//                     <Switch
-//                       checked={permissions.rewards.topTier.view}
-//                       onCheckedChange={() =>
-//                         handleToggle("rewards.topTier.view")
-//                       }
-//                     />
-//                   </div>
-//                   {permissions.rewards.topTier.view && (
-//                     <div className="ml-6 mt-2 space-y-2 flex flex-wrap gap-8">
-//                       <div className="flex items-center gap-4">
-//                         <span>
-//                           Top Tier{" "}
-//                           <span className="text-xs text-gray-400">(View)</span>
-//                         </span>
-//                         <Switch
-//                           checked={permissions.rewards.topTier.view}
-//                           onCheckedChange={() =>
-//                             handleToggle("rewards.topTier.view")
-//                           }
-//                         />
-//                       </div>
-//                       <div className="flex items-center gap-2">
-//                         <span>
-//                           Charity Lottery{" "}
-//                           <span className="text-xs text-gray-400">(View)</span>
-//                         </span>
-//                         <Switch
-//                           checked={permissions.rewards.charityLottery.view}
-//                           onCheckedChange={() =>
-//                             handleToggle("rewards.charityLottery.view")
-//                           }
-//                         />
-//                       </div>
-//                       <div className="flex items-center gap-2">
-//                         <span>
-//                           NFTs{" "}
-//                           <span className="text-xs text-gray-400">(View)</span>
-//                         </span>
-//                         <Switch
-//                           checked={permissions.rewards.nfts.view}
-//                           onCheckedChange={() =>
-//                             handleToggle("rewards.nfts.view")
-//                           }
-//                         />
-//                       </div>
-//                       {permissions.rewards.nfts.view && (
-//                         <div className="ml-6 mt-2">
-//                           <div className="flex items-center gap-2">
-//                             <span>Create</span>
-//                             <Switch
-//                               checked={permissions.rewards.nfts.create}
-//                               onCheckedChange={() =>
-//                                 handleToggle("rewards.nfts.create")
-//                               }
-//                             />
-//                           </div>
-//                         </div>
-//                       )}
-//                       <div className="flex items-center justify-between">
-//                         <span>
-//                           Staking{" "}
-//                           <span className="text-xs text-gray-400">(View)</span>
-//                         </span>
-//                         <Switch
-//                           checked={permissions.rewards.staking.view}
-//                           onCheckedChange={() =>
-//                             handleToggle("rewards.staking.view")
-//                           }
-//                         />
-//                       </div>
-//                     </div>
-//                   )}
-//                 </div>
-
-//                 {/* Community */}
-//                 <div className="border-b border-gray-800 py-3">
-//                   <div className="flex items-center justify-between">
-//                     <span>Community</span>
-//                     <Switch
-//                       checked={permissions.community.news.view}
-//                       onCheckedChange={() =>
-//                         handleToggle("community.news.view")
-//                       }
-//                     />
-//                   </div>
-//                   {permissions.community.news.view && (
-//                     <div className="ml-6 mt-2 space-y-2">
-//                       <div className="flex items-center justify-between">
-//                         <span>Create</span>
-//                         <Switch
-//                           checked={permissions.community.news.create}
-//                           onCheckedChange={() =>
-//                             handleToggle("community.news.create")
-//                           }
-//                         />
-//                       </div>
-//                       <div className="flex items-center justify-between">
-//                         <span>Update</span>
-//                         <Switch
-//                           checked={permissions.community.news.update}
-//                           onCheckedChange={() =>
-//                             handleToggle("community.news.update")
-//                           }
-//                         />
-//                       </div>
-//                       <div className="flex items-center justify-between">
-//                         <span>Delete</span>
-//                         <Switch
-//                           checked={permissions.community.news.delete}
-//                           onCheckedChange={() =>
-//                             handleToggle("community.news.delete")
-//                           }
-//                         />
-//                       </div>
-//                     </div>
-//                   )}
-//                 </div>
-
-//                 {/* Dapp Global Settings */}
-//                 <div className="border-b border-gray-800 py-3">
-//                   <div className="flex items-center justify-between">
-//                     <span>Dapp Global Settings</span>
-//                     <Switch
-//                       checked={permissions.dappGlobalSettings.causes}
-//                       onCheckedChange={() =>
-//                         handleToggle("dappGlobalSettings.causes")
-//                       }
-//                     />
-//                   </div>
-//                   {permissions.dappGlobalSettings.causes && (
-//                     <div className="ml-6 mt-2 space-y-2">
-//                       <div className="flex items-center justify-between">
-//                         <span>Governance</span>
-//                         <Switch
-//                           checked={permissions.dappGlobalSettings.governance}
-//                           onCheckedChange={() =>
-//                             handleToggle("dappGlobalSettings.governance")
-//                           }
-//                         />
-//                       </div>
-//                       <div className="flex items-center justify-between">
-//                         <span>Rewards</span>
-//                         <Switch
-//                           checked={permissions.dappGlobalSettings.rewards}
-//                           onCheckedChange={() =>
-//                             handleToggle("dappGlobalSettings.rewards")
-//                           }
-//                         />
-//                       </div>
-//                       <div className="flex items-center justify-between">
-//                         <span>Wallets Management</span>
-//                         <Switch
-//                           checked={permissions.dappGlobalSettings.walletsManagement}
-//                           onCheckedChange={() =>
-//                             handleToggle("dappGlobalSettings.walletsManagement")
-//                           }
-//                         />
-//                       </div>
-//                     </div>
-//                   )}
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Actions */}
-//             <div className="flex justify-between mb-5 mt-4">
-//               <Button
-//                 type="submit"
-//                 size={"lg"}
-//               >
-//                 Update administrator
-//               </Button>
-//               <Button
-//                 size={"lg"}
-//                 variant={"destructive"}
-//                 type="button"
-//               >
-//                 <Trash2 className="h-4 w-4" />
-//                 Delete
-//               </Button>
-//             </div>
-//           </form>
-//         </FormProvider>
-//       </div>
-//     );
-//   };
-
-import { useForm } from "react-hook-form";
+import { Administrator, administrators } from "@/schemas/adminstration-schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { Input } from "../ui/input";
 import FormSectionTitle from "../causes/edit/form-section-title";
 import FormField from "../causes/edit/form-field";
@@ -382,12 +8,19 @@ import { HeaderWrapper } from "../custom/header-wrapper";
 import Image from "next/image";
 import { Switch } from "../ui/switch";
 import { Button } from "../ui/button";
-import { Trash2 } from "lucide-react";
-import { Administrator, administrators } from "@/schemas/adminstration-schema";
-import { useTogglePermissions } from "@/stores/toggle-store";
+import { ArrowRight, Trash2 } from "lucide-react";
+import { Label } from "../ui/label";
+import { cn } from "@/lib/utils";
+
+type PermissionPath = {
+  path: string;
+  label: string;
+  description?: string;
+  children?: PermissionPath[];
+};
 
 export const EditAdministrator = () => {
-  const form = useForm<Administrator>({
+  const formMethods = useForm<Administrator>({
     resolver: yupResolver(administrators),
     defaultValues: {
       username: "",
@@ -441,385 +74,336 @@ export const EditAdministrator = () => {
   });
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
     setValue,
-    trigger,
-  } = form;
+    watch,
+    register,
+  } = formMethods;
+
+  const permissions = watch("permissions");
+
+  const permissionStructure: PermissionPath[] = [
+    {
+      path: "dashboard",
+      label: "Dashboard",
+    },
+    {
+      path: "causes.view",
+      label: "Causes",
+      description: "View access for causes",
+      children: [
+        { path: "causes.create", label: "Create new causes" },
+        { path: "causes.update", label: "Update existing causes" },
+        { path: "causes.delete", label: "Delete causes" },
+      ],
+    },
+    {
+      path: "rewards.topTier.view",
+      label: "Rewards",
+      description: "Top tier rewards management",
+      children: [
+        {
+          path: "rewards.charityLottery.view",
+          label: "Charity Lottery",
+          description: "View charity lottery rewards",
+        },
+        {
+          path: "rewards.nfts.view",
+          label: "NFTs",
+          description: "View NFT rewards",
+          children: [
+            {
+              path: "rewards.nfts.create",
+              label: "Create NFTs",
+              description: "Create new NFT rewards",
+            },
+          ],
+        },
+        {
+          path: "rewards.staking.view",
+          label: "Staking",
+          description: "View staking rewards",
+        },
+      ],
+    },
+    {
+      path: "community.news.view",
+      label: "Community",
+      description: "News management",
+      children: [
+        { path: "community.news.create", label: "Create news posts" },
+        { path: "community.news.update", label: "Update news posts" },
+        { path: "community.news.delete", label: "Delete news posts" },
+        { path: "community.users.view", label: "View users" },
+        {
+          path: "community.users.blockUnblock",
+          label: "Block/Unblock users",
+        },
+        {
+          path: "community.administrators.view",
+          label: "Administrators",
+          description: "View administrators",
+          children: [
+            { path: "community.administrators.create", label: "Create admins" },
+            { path: "community.administrators.update", label: "Update admins" },
+            {
+              path: "community.administrators.updateOwnAccount",
+              label: "Update own account",
+            },
+            { path: "community.administrators.delete", label: "Delete admins" },
+          ],
+        },
+      ],
+    },
+    {
+      path: "dappGlobalSettings.causes",
+      label: "Dapp Settings",
+      description: "Global cause settings",
+      children: [
+        { path: "dappGlobalSettings.governance", label: "Governance" },
+        { path: "dappGlobalSettings.rewards", label: "Rewards" },
+        {
+          path: "dappGlobalSettings.walletsManagement",
+          label: "Wallets",
+        },
+      ],
+    },
+  ];
+
+  const getNestedValue = (obj: any, path: string): boolean => {
+    return path.split(".").reduce((o, k) => (o || {})[k], obj);
+  };
+
+  const handleToggle = (path: string) => {
+    const currentValue = getNestedValue(permissions, path);
+    setValue(`permissions.${path}` as any, !currentValue, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  const renderPermissionSwitch = (permission: PermissionPath, depth = 0) => {
+    const value = getNestedValue(permissions, permission.path);
+    const hasChildren = permission.children && permission.children.length > 0;
+    const id = `permission-${permission.path.replace(/\./g, "-")}`;
+    const isParentWithChildren = hasChildren;
+    const isChild = depth > 0;
+
+    return (
+      <div
+        key={permission.path}
+        className={`
+          ${isChild ? "mt-3" : ""} 
+          ${isParentWithChildren ? "" : ""}
+        `}
+        style={{ marginLeft: `${depth * 24}px` }}
+      >
+        <div
+          className={`
+          flex items-center justify-start gap-4
+          ${
+            isParentWithChildren ? " items-center " : "flex-row flex-wrap gap-2"
+          }
+        `}
+        >
+          <div className="flex flex-col  space-y-1">
+            <Label htmlFor={id} className="text-sm font-medium leading-none">
+              {permission.label}
+            </Label>
+            {permission.description && (
+              <span className="text-xs text-muted-foreground">
+                {permission.description}
+              </span>
+            )}
+          </div>
+          <Switch
+            id={id}
+            checked={value}
+            onCheckedChange={() => handleToggle(permission.path)}
+            className={isParentWithChildren ? "self-end mt-1" : ""}
+          />
+        </div>
+
+        {hasChildren && value && (
+          <div
+            className={cn(
+              "space-y-3 mt-3 flex  ",
+              isParentWithChildren ? "flex-col" : "flex-row"
+            )}
+          >
+            {permission.children?.map((child) =>
+              renderPermissionSwitch(child, depth + 1)
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const onSubmit = (data: Administrator) => {
     console.log("Form Data:", data);
-    // Implement API call to update administrator here
   };
-
-  const { permissions, handleToggle } = useTogglePermissions(
-    form.getValues().permissions,
-    setValue as any,
-    trigger as any
-  );
 
   return (
     <div className="px-5">
-      {/* Header */}
-      <HeaderWrapper
-        title="Edit Administrator"
-        description="Edit administrator details"
-        size={"xs"}
-      />
+      <div className="mx-8 mt-2">
+        <HeaderWrapper
+          title="Edit Administrator"
+          description="Edit administrator details"
+          size={"xs"}
+        />
+      </div>
 
-      {/* Form Provider */}
-      <FormProvider {...form}>
+      <FormProvider {...formMethods}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-8 grid grid-cols-2 max-md:grid-cols-1 gap-4">
-            {/* Main Details Section */}
+            <div className="col-span-2">
+              <FormSectionTitle title="Main details" className="col-span-2" />
+            </div>
+
             <FormField
               id="username"
               label="Username"
               description="Choose a unique username"
-              error={errors.username?.message as string | undefined}
+              error={errors.username?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 id="username"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("username")}
               />
             </FormField>
+
             <FormField
               id="name"
               label="Name"
-              description="Enter a full name"
-              error={errors.name?.message as string | undefined}
+              description="Enter administrator's full name"
+              error={errors.name?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 id="name"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("name")}
               />
             </FormField>
+
             <FormField
               id="email"
               label="Email"
-              description="Enter a CharCoin official email to receive OTP verifications"
-              error={errors.email?.message as string | undefined}
+              description="Official email for OTP verifications"
+              error={errors.email?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 id="email"
+                type="email"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("email")}
               />
             </FormField>
+
             <FormField
               id="phone"
               label="Phone"
-              description="Enter a phone to receive SMS OTP verifications"
-              error={errors.phone?.message as string | undefined}
+              description="Phone number for SMS verifications"
+              error={errors.phone?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 id="phone"
+                type="tel"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("phone")}
               />
             </FormField>
+
             <FormField
               id="accessPin"
               label="Access PIN"
-              description="Enter a six-digit PIN code"
-              error={errors.accessPin?.message as string | undefined}
+              description="Six-digit security PIN"
+              error={errors.accessPin?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 type="password"
                 id="accessPin"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("accessPin")}
               />
             </FormField>
+
             <FormField
               id="password"
               label="Password"
-              description="Enter a safe password"
-              error={errors.password?.message as string | undefined}
+              description="Set a secure password"
+              error={errors.password?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 type="password"
                 id="password"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("password")}
               />
             </FormField>
+
             <FormField
               id="authenticatorApp"
-              label="Authenticator Application"
-              description="Choose your login OTP verification application"
-              error={errors.authenticatorApp?.message as string | undefined}
+              label="2FA App"
+              description="Authenticator application for OTP"
+              error={errors.authenticatorApp?.message}
             >
               <Input
                 variant="newly_secondary"
-                inputSize="lg"
                 id="authenticatorApp"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("authenticatorApp")}
               />
             </FormField>
-            <div className="h-full flex items-center">
+
+            <div className="h-full flex items-center gap-4">
               <div className="text-xs">
-                <h3>Verify your authenticator</h3>
+                <h3 className="font-medium">Authenticator Setup</h3>
                 <p className="text-muted-foreground">
-                  Scan the QR with your authenticator application and follow the
-                  steps in your mobile phone
+                  Scan the QR code with your 2FA app to enable verification
                 </p>
               </div>
               <Image
                 src="/feature-image.png"
-                alt="qr"
+                alt="QR code for 2FA setup"
                 width={100}
                 height={100}
-                className="object-cover w-20 h-20 bg-foreground p-2"
+                className="object-cover w-20 h-20 bg-foreground p-2 rounded"
               />
             </div>
 
-            {/* Permissions Section */}
-            <FormSectionTitle title="Permissions" className="col-span-2" />
-            <p className="text-muted-foreground col-span-2 text-xs">
-              Select all the permissions that will be available for this user in
-              the private administration area of the CharCoin ecosystem
-            </p>
             <div className="col-span-2">
-              {/* Dashboard */}
-              <div className="border-b border-gray-800 py-3">
-                <div className="flex items-center gap-4">
-                  <span>Dashboard</span>
-                  <Switch
-                    checked={permissions.dashboard}
-                    onCheckedChange={() => handleToggle("dashboard")}
-                  />
-                </div>
-              </div>
+              <FormSectionTitle
+                title="Permissions"
+                className="col-span-2 mt-6"
+              />
+              <p className="text-muted-foreground col-span-2 text-xs mb-4">
+                Configure administrator access permissions for different system
+                modules
+              </p>
+            </div>
 
-              {/* Causes */}
-              <div className="border-b border-gray-800 py-3">
-                <div className="flex items-center gap-4">
-                  <span>
-                    Causes <span className="text-xs text-gray-400">(View)</span>
-                  </span>
-                  <Switch
-                    checked={permissions.causes.view}
-                    onCheckedChange={() => handleToggle("causes.view")}
-                  />
-                </div>
-                {permissions.causes.view && (
-                  <div className="ml-6 mt-2 space-y-2 flex gap-8">
-                    <div className="flex items-center gap-2">
-                      <span>Create</span>
-                      <Switch
-                        checked={permissions.causes.create}
-                        onCheckedChange={() => handleToggle("causes.create")}
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span>Update</span>
-                      <Switch
-                        checked={permissions.causes.update}
-                        onCheckedChange={() => handleToggle("causes.update")}
-                      />
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span>Delete</span>
-                      <Switch
-                        checked={permissions.causes.delete}
-                        onCheckedChange={() => handleToggle("causes.delete")}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Rewards */}
-              <div className="border-b border-gray-800 py-3">
-                <div className="flex items-center gap-4">
-                  <span>Rewards</span>
-                  <Switch
-                    checked={permissions.rewards.topTier.view}
-                    onCheckedChange={() => handleToggle("rewards.topTier.view")}
-                  />
-                </div>
-                {permissions.rewards.topTier.view && (
-                  <div className="ml-6 mt-2 space-y-2 flex flex-wrap gap-8">
-                    <div className="flex items-center gap-4">
-                      <span>
-                        Top Tier{" "}
-                        <span className="text-xs text-gray-400">(View)</span>
-                      </span>
-                      <Switch
-                        checked={permissions.rewards.topTier.view}
-                        onCheckedChange={() =>
-                          handleToggle("rewards.topTier.view")
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>
-                        Charity Lottery{" "}
-                        <span className="text-xs text-gray-400">(View)</span>
-                      </span>
-                      <Switch
-                        checked={permissions.rewards.charityLottery.view}
-                        onCheckedChange={() =>
-                          handleToggle("rewards.charityLottery.view")
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>
-                        NFTs{" "}
-                        <span className="text-xs text-gray-400">(View)</span>
-                      </span>
-                      <Switch
-                        checked={permissions.rewards.nfts.view}
-                        onCheckedChange={() =>
-                          handleToggle("rewards.nfts.view")
-                        }
-                      />
-                    </div>
-                    {permissions.rewards.nfts.view && (
-                      <div className="ml-6 mt-2">
-                        <div className="flex items-center gap-4">
-                          <span>Create</span>
-                          <Switch
-                            checked={permissions.rewards.nfts.create}
-                            onCheckedChange={() =>
-                              handleToggle("rewards.nfts.create")
-                            }
-                          />
-                        </div>
-                      </div>
-                    )}
-                    <div className="flex items-center gap-4">
-                      <span>
-                        Staking{" "}
-                        <span className="text-xs text-gray-400">(View)</span>
-                      </span>
-                      <Switch
-                        checked={permissions.rewards.staking.view}
-                        onCheckedChange={() =>
-                          handleToggle("rewards.staking.view")
-                        }
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Community */}
-              <div className="border-b border-gray-800 py-3">
-                <div className="flex items-center gap-4">
-                  <span>Community</span>
-                  <Switch
-                    checked={permissions.community.news.view}
-                    onCheckedChange={() => handleToggle("community.news.view")}
-                  />
-                </div>
-                {permissions.community.news.view && (
-                  <div className="ml-6 mt-2 space-y-2 flex gap-8">
-                    <div className="flex items-center gap-4">
-                      <span>Create</span>
-                      <Switch
-                        checked={permissions.community.news.create}
-                        onCheckedChange={() =>
-                          handleToggle("community.news.create")
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>Update</span>
-                      <Switch
-                        checked={permissions.community.news.update}
-                        onCheckedChange={() =>
-                          handleToggle("community.news.update")
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>Delete</span>
-                      <Switch
-                        checked={permissions.community.news.delete}
-                        onCheckedChange={() =>
-                          handleToggle("community.news.delete")
-                        }
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Dapp Global Settings */}
-              <div className="border-b border-gray-800 py-3">
-                <div className="flex items-center gap-4">
-                  <span>Dapp Global Settings</span>
-                  <Switch
-                    checked={permissions.dappGlobalSettings.causes}
-                    onCheckedChange={() =>
-                      handleToggle("dappGlobalSettings.causes")
-                    }
-                  />
-                </div>
-                {permissions.dappGlobalSettings.causes && (
-                  <div className="ml-6 mt-2 space-y-2 flex gap-8">
-                    <div className="flex items-center gap-4">
-                      <span>Governance</span>
-                      <Switch
-                        checked={permissions.dappGlobalSettings.governance}
-                        onCheckedChange={() =>
-                          handleToggle("dappGlobalSettings.governance")
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>Rewards</span>
-                      <Switch
-                        checked={permissions.dappGlobalSettings.rewards}
-                        onCheckedChange={() =>
-                          handleToggle("dappGlobalSettings.rewards")
-                        }
-                      />
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span>Wallets Management</span>
-                      <Switch
-                        checked={
-                          permissions.dappGlobalSettings.walletsManagement
-                        }
-                        onCheckedChange={() =>
-                          handleToggle("dappGlobalSettings.walletsManagement")
-                        }
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
+            <div className="col-span-2 space-y-4  p-6 rounded-lg">
+              {permissionStructure.map((permission) =>
+                renderPermissionSwitch(permission)
+              )}
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex justify-between mb-5 mt-4">
-            <Button type="submit" size={"lg"}>
-              Update administrator
+          <div className="flex justify-between gap-4 mt-8 mb-4">
+            <Button type="button" size="lg">
+              Update Administrator <ArrowRight className="w-5 h-5" />
             </Button>
-            <Button size={"lg"} variant={"destructive"} type="button">
-              <Trash2 className="h-4 w-4" />
-              Delete
+            <Button type="submit" size="lg" variant="destructive">
+              Delete <Trash2 className="h-4 w-4 " />
             </Button>
           </div>
         </form>

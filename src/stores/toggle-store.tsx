@@ -1,45 +1,46 @@
-import { useState } from "react";
+import { create } from "zustand";
 
-/**
- * Utility function to handle toggle switches for nested permissions.
- * @param path - The dot-separated path to the nested permission (e.g., "causes.view").
- * @param setValue - react-hook-form's setValue function to update the form state.
- * @param trigger - react-hook-form's trigger function to revalidate the field.
- * @param initialState - The initial state of the permissions object.
- * @returns An object containing the permissions state and the toggle handler.
- */
-export const useTogglePermissions = <T extends Record<string, any>>(
-  initialState: T,
-  setValue: (field: string, value: any) => void,
-  trigger: (field: string) => Promise<void>
-) => {
-  const [permissions, setPermissions] = useState<T>(initialState);
-
-  const handleToggle = async (path: string) => {
-    setPermissions((prev) => {
-      // Deep copy to ensure React state updates correctly
-      const newPermissions = JSON.parse(JSON.stringify(prev));
-      const keys = path.split(".");
-      let current: any = newPermissions;
-
-      // Navigate to the nested property
-      for (let i = 0; i < keys.length - 1; i++) {
-        if (!current[keys[i]]) current[keys[i]] = {}; // Ensure path exists
-        current = current[keys[i]];
-      }
-
-      // Toggle the value
-      current[keys[keys.length - 1]] = !current[keys[keys.length - 1]];
-
-      // Update form state
-      setValue(`permissions.${path}`, current[keys[keys.length - 1]]);
-
-      return newPermissions;
-    });
-
-    // Revalidate the form after updating permissions
-    await trigger(`permissions.${path}`);
-  };
-
-  return { permissions, handleToggle };
+// Define the type for permissions
+type Permissions = {
+  [key: string]: boolean;
 };
+
+// Define the state structure
+interface SwitchesProviderState {
+  permissions: Permissions;
+  togglePermission: (key: keyof Permissions) => void;
+}
+
+// Default permissions object
+const defaultPermissions: Permissions = {
+  dashboard: false,
+  "causes.view": false,
+  "causes.create": false,
+  "causes.update": false,
+  "causes.delete": false,
+  "rewards.topTier.view": false,
+  "rewards.charityLottery.view": false,
+  "rewards.nfts.view": false,
+  "rewards.nfts.create": false,
+  "rewards.staking.view": false,
+  "community.news.view": false,
+  "community.news.create": false,
+  "community.news.update": false,
+  "community.news.delete": false,
+  "dappGlobalSettings.causes": false,
+  "dappGlobalSettings.governance": false,
+  "dappGlobalSettings.rewards": false,
+  "dappGlobalSettings.walletsManagement": false,
+};
+
+// Create Zustand store with typed state
+export const useSwitchesProvider = create<SwitchesProviderState>((set) => ({
+  permissions: defaultPermissions,
+  togglePermission: (key) =>
+    set((state) => ({
+      permissions: {
+        ...state.permissions,
+        [key]: !state.permissions[key],
+      },
+    })),
+}));
