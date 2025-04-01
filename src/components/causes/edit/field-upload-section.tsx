@@ -99,6 +99,7 @@ export default function ImageUploadSection({
           onClick={() => setImageFiles([])}
           disabled={imageFiles.length === 0}
           startIcon={Trash2}
+          className="!ring-destructive"
         >
           Delete All
         </Button>

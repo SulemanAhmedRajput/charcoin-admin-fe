@@ -67,8 +67,9 @@ export default function FileUploadSection({
           variant="destructive"
           onClick={handleFileDelete}
           disabled={!file}
+          startIcon={Trash2}
+          className={"!ring-destructive"}
         >
-          <Trash2 className="h-4 w-4" />
           Delete File
         </Button>
       </div>

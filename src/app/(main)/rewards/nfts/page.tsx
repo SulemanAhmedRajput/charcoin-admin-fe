@@ -13,6 +13,9 @@ import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "@/components/ui/date-time-picker";
 import useDialogStore from "@/stores/dialog-store";
 import { NFTSRecord } from "@/types/rewards";
+import { Arrow } from "@radix-ui/react-dropdown-menu";
+import { ArrowRight, ArrowRightCircleSolid } from "@mynaui/icons-react";
+import { ArrowRightIcon } from "lucide-react";
 
 const transactionRecords: NFTSRecord[] = [
   {
@@ -104,8 +107,8 @@ const TopTiers = () => {
       title="Rewards - NFTs"
       description="NFT collections and distribution control"
       actions={
-        <Button size={"lg"} onClick={() => setNtfsAdd(true)}>
-          Add new →
+        <Button size={"lg"} onClick={() => setNtfsAdd(true)} endIcon={ArrowRightIcon}>
+          Add new 
         </Button>
       }
     >

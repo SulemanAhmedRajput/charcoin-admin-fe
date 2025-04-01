@@ -112,6 +112,8 @@ export default function CausesPage() {
   const [date, setDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState("running");
 
+  
+
   // React Query for fetching causes
   const { data = [], isLoading } = useQuery({
     queryKey: ["causes", searchQuery, activeTab],
