@@ -7,19 +7,17 @@ export default function FormActions() {
       <Button
         size={"lg"}
         type="submit"
-        className="bg-primary hover:bg-primary/80 text-background flex items-center gap-2"
+        endIcon={Save}
       >
         Save
-        <Save className="h-4 w-4" />
       </Button>
       <Button
         type="button"
         size={"lg"}
         variant="destructive"
-        className="bg-red-500 text-foreground flex items-center gap-2"
+        endIcon={Trash2}
       >
         Delete
-        <Trash2 className="h-4 w-4" />
       </Button>
     </div>
   );

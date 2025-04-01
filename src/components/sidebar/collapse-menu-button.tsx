@@ -67,7 +67,7 @@ export function CollapseMenuButton({
       >
         <Button
           variant={isSubmenuActive ? "secondary" : "ghost"}
-          className="w-full justify-start h-10 hover:bg-slate-500 hover:text-primary"
+          className="w-full  justify-start h-10 hover:bg-slate-500 hover:text-primary"
         >
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center">
@@ -87,7 +87,7 @@ export function CollapseMenuButton({
             </div>
             <div
               className={cn(
-                "whitespace-nowrap",
+                "whitespace-nowrap ",
                 isOpen
                   ? "translate-x-0 opacity-100"
                   : "-translate-x-96 opacity-0"
@@ -110,10 +110,10 @@ export function CollapseMenuButton({
                 ? "secondary"
                 : "ghost"
             }
-            className="w-full justify-start h-10 mb-1 hover:bg-slate-500 hover:text-primary"
+            className="w-full  flex  justify-start h-10 mb-1 hover:bg-slate-500 hover:text-primary"
             asChild
           >
-            <Link href={href}>
+            <Link href={href} className="flex">
               <span className="mr-4 ml-2">
                 <ChevronDown className="rotate-45" size={18} />
               </span>

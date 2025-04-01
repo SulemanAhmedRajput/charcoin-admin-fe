@@ -57,6 +57,7 @@ export const CreateNftsTwo = () => {
           >
             <Input
               id="nftName"
+              placeholder="NFT Name"
               variant="newly_secondary"
               inputSize="lg"
               {...register("nftName")}
@@ -73,6 +74,7 @@ export const CreateNftsTwo = () => {
             <Input
               variant="newly_secondary"
               inputSize="lg"
+              placeholder="Description"
               id="description"
               className="bg-gray-800 border-gray-700 text-white"
               {...register("description")}
@@ -110,7 +112,7 @@ export const CreateNftsTwo = () => {
 
             {/* Campaign Selection */}
             <FormField
-              id="campaign"
+              id="wallet"
               label="SOLANA Wallet"
               description="Enter the Wallet to be transferred to after minting"
               error={errors.wallet?.message}
@@ -118,7 +120,8 @@ export const CreateNftsTwo = () => {
               <Input
                 variant="newly_secondary"
                 inputSize="lg"
-                id="description"
+                placeholder="Enter Solana Wallet"
+                id="wallet"
                 className="bg-gray-800 border-gray-700 text-white"
                 {...register("wallet")}
               />{" "}
@@ -137,8 +140,14 @@ export const CreateNftsTwo = () => {
           </p>
 
           {/* Mint NFT Button */}
-          <Button type="submit" size={"lg"} className="mt-8 flex gap-4">
-            Mint NFT and Transfer <ArrowRight />
+          <Button
+            type="submit"
+            size="lg"
+            endIcon={ArrowRight}  // ✅ Pass the component, NOT JSX
+           
+            className="mt-8 font-semibold flex gap-4"
+          >
+            Mint NFT and Transfer
           </Button>
         </form>
       </FormProvider>

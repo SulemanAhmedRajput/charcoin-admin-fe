@@ -78,7 +78,7 @@ export const CauseDetail = () => {
               <p className="text-custom-light_text text-xs">
                 Final potential monthly donation (15% staking profit){" "}
               </p>
-              <Button className="bg-custom-purple hover:bg-custom-purple-/90 text-foreground">
+              <Button className="bg-custom-purple !ring-custom-purple tracking-wider hover:bg-custom-purple-/90 text-foreground">
                 Infinite Impact
               </Button>
             </span>
@@ -99,7 +99,7 @@ export const CauseDetail = () => {
         {/* Wallet Information */}
         <div className="flex justify-between flex-wrap text-sm">
           <p className="text-primary !break-words  ">
-            {/* 0xfd88987b67c265fe57f1bdb3b57d97b717ef567e20bd18ba3c2a780040f15634d6fe */}
+            0xfd88987b67c265fe57f1bdb3b57d97b717ef567e20bd18ba3c2a780040f15634d6fe
             <br />
             <span className="text-muted-foreground">
               Donation Receiver Wallet

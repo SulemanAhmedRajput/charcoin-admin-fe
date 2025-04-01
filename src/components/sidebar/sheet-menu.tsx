@@ -1,5 +1,4 @@
-import { MenuIcon, PanelsTopLeft } from "lucide-react";
-import Link from "next/link";
+import { MenuIcon } from "lucide-react";
 
 import { Menu } from "@/components/sidebar/menu";
 import { Button } from "@/components/ui/button";
@@ -10,12 +9,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import AnimatedMenuButton from "./animated-menu";
-import { useSidebarStore } from "@/stores/sidebar-store";
 import { cn } from "@/lib/utils";
-import LogoImage from "../custom/logo-image";
+import { useSidebarStore } from "@/stores/sidebar-store";
 import { BrandTelegram, BrandTwitter } from "@mynaui/icons-react";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import LogoImage from "../custom/logo-image";
 
 export function SheetMenu() {
   const sidebar = useSidebarStore();

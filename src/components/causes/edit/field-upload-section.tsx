@@ -77,9 +77,9 @@ export default function ImageUploadSection({
           type="button"
           onClick={() => fileInputRef.current?.click()}
           size={"lg"}
+          startIcon={Upload}
           className="bg-primary hover:bg-primary/80 text-background flex items-center gap-2"
         >
-          <Upload className="h-4 w-4" />
           Upload Images
         </Button>
 
@@ -96,11 +96,10 @@ export default function ImageUploadSection({
           type="button"
           variant="destructive"
           size={"lg"}
-          className="bg-red-500 text-foreground size flex items-center gap-2"
           onClick={() => setImageFiles([])}
           disabled={imageFiles.length === 0}
+          startIcon={Trash2}
         >
-          <Trash2 className="h-4 w-4" />
           Delete All
         </Button>
       </div>
