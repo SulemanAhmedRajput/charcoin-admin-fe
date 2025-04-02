@@ -21,7 +21,8 @@ export function Sidebar() {
         settings.disabled && "hidden"
       )}
     >
-      <SidebarToggle isOpen={isOpen} setIsOpen={toggleOpen} />
+      
+      <SidebarToggle isOpen={getOpenState()} setIsOpen={toggleOpen} />
       <div
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}

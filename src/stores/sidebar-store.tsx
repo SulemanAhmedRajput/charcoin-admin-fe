@@ -29,7 +29,7 @@ const initialSidebarState: Omit<
   isHover: false,
   settings: {
     disabled: false,
-    isHoverOpen: false,
+    isHoverOpen: true,
   },
 };
 
