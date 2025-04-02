@@ -67,7 +67,9 @@ export function CollapseMenuButton({
       >
         <Button
           variant={isSubmenuActive ? "secondary" : "ghost"}
-          className="w-full  justify-start h-10 hover:bg-slate-500 hover:text-primary"
+          className={
+            cn("w-full  justify-start h-10 hover:bg-slate-500 hover:text-primary", isSubmenuActive && "text-primary bg-primary/10")
+          }
         >
           <div className="w-full items-center flex justify-between">
             <div className="flex items-center">
@@ -110,10 +112,13 @@ export function CollapseMenuButton({
                 ? "secondary"
                 : "ghost"
             }
-            className="w-full  flex  justify-start h-10 mb-1 hover:bg-slate-500 hover:text-primary"
+            className={
+              cn("w-full  flex  justify-start h-10 mb-1 hover:bg-slate-500 hover:text-primary", ((active === undefined && pathname === href) || active)
+                && "!text-primary bg-primary/5")
+            }
             asChild
           >
-            <Link href={href} className="flex">
+            <Link href={href} className="flex w-full">
               <span className="mr-4 ml-2">
                 <ChevronDown className="rotate-45" size={18} />
               </span>
@@ -140,7 +145,9 @@ export function CollapseMenuButton({
             <DropdownMenuTrigger asChild>
               <Button
                 variant={isSubmenuActive ? "secondary" : "ghost"}
-                className="w-full justify-start h-10 mb-1"
+                className={
+                  cn("w-full justify-start h-10 mb-1", isSubmenuActive && "text-primary bg-primary/10")
+                }
               >
                 <div className="w-full items-center flex justify-between">
                   <div className="flex items-center">
@@ -173,10 +180,9 @@ export function CollapseMenuButton({
         {submenus.map(({ href, label, active }, index) => (
           <DropdownMenuItem key={index} asChild>
             <Link
-              className={`cursor-pointer ${
-                ((active === undefined && pathname === href) || active) &&
+              className={`cursor-pointer ${((active === undefined && pathname === href) || active) &&
                 "bg-secondary"
-              }`}
+                }`}
               href={href}
             >
               <p className="max-w-[180px] truncate">{label}</p>
