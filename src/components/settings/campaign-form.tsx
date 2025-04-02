@@ -116,6 +116,7 @@ const CampaignForm
 
                         <FormSectionTitle title="Main details" />
 
+{JSON.stringify(errors, null, 2)}
                         <FormField
                             id="category-name"
                             label="Category name"
@@ -150,7 +151,7 @@ const CampaignForm
 
                         <hr className="!border-accent mb-5" />
                         <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4 ">
-                            <FormField
+                          {(watch("annualSpecialCampaign")) &&   <FormField
                                 id="year"
                                 label="Year"
                                 description="Select the current year"
@@ -168,17 +169,27 @@ const CampaignForm
                                     options={yearRange?.reverse()?.map(year => ({ value: `${year}`, label: `${year}` }))} // Format the options
                                 />
 
-                            </FormField>
+                            </FormField>}
 
-
-
-                            <FormField
-                                id="year"
-                                label="Year"
-                                description="Select the current year"
+                            {
+                                !(watch("annualSpecialCampaign")) && <FormField
+                                id="start_date"
+                                label="Start date"
+                                description="Enter the last day of the campaign"
                                 error={errors?.endDate?.message as string | undefined}
                             >
-                                <DateTimePicker position="right" date={watch("endDate")} setDate={(date) => setValue("endDate", date as Date)} size="lg" className="w-full px-4" iconClassName="!w-5 !h-5"  />
+                                <DateTimePicker position="right" date={watch("startDate") as Date} setDate={(date) => setValue("startDate", date as Date)} size="lg" className="w-full px-4" iconClassName="!w-5 !h-5"  />
+
+                            </FormField>
+                            }
+
+                            <FormField
+                                id="end_date"
+                                label="End date"
+                                description="Enter the last day of the campaign"
+                                error={errors?.endDate?.message as string | undefined}
+                            >
+                                <DateTimePicker position="right" date={watch("endDate") as Date} setDate={(date) => setValue("endDate", date as Date)} size="lg" className="w-full px-4" iconClassName="!w-5 !h-5"  />
 
                             </FormField>
                         </div>
@@ -192,7 +203,7 @@ const CampaignForm
                             }}
                             endIcon={ArrowRight}
                         >
-                            {mode === "add" ? "Add Category" : "Update Category"}
+                            {mode === "add" ? "Add Campaign" : "Update Campaign"}
                         </Button>
                     </form>
                 </FormProvider>
