@@ -10,6 +10,8 @@ import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Cause } from "@/types/causes";
+import useDialogStore from "@/stores/dialog-store";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
 
 // Create dummy data
 const causes: Cause[] = [
@@ -112,7 +114,6 @@ export default function CausesPage() {
   const [date, setDate] = useState<Date>(new Date());
   const [activeTab, setActiveTab] = useState("running");
 
-  
 
   // React Query for fetching causes
   const { data = [], isLoading } = useQuery({
@@ -173,7 +174,9 @@ export default function CausesPage() {
             />
           </TabsContent>
         </Tabs>
+
       </div>
+
     </div>
   );
 }

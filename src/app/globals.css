@@ -105,6 +105,10 @@ body {
   border: 4px solid var(--sb-track-color);
 }
 
+*::-webkit-scrollbar-corner {
+  background-color: var(--sb-track-color);
+}
+
 @supports not selector(::-webkit-scrollbar) {
   * {
     scrollbar-color: var(--sb-thumb-color)

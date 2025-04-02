@@ -2,16 +2,18 @@ import { create } from "zustand";
 
 interface DialogState {
   openDialog:
-    | "causes_detail"
-    | "causes_edit"
-    | "causes_add"
-    | "community_news_add"
-    | "community_user_wallet_add"
-    | "community_administration_add"
-    | "nfts_add"
-    | "add_administrator"
-    | "edit_administrator"
-    | null;
+  | "causes_detail"
+  | "causes_edit"
+  | "causes_add"
+  | "community_news_add"
+  | "community_user_wallet_add"
+  | "community_administration_add"
+  | "nfts_add"
+  | "add_administrator"
+  | "edit_administrator"
+  | "add_category"
+  | "edit_category"
+  | null;
 
   openDetail: () => void;
   openEdit: () => void;
@@ -28,6 +30,10 @@ interface DialogState {
   // Adminstrator
   setAddAdministrator: (isOpen: boolean) => void;
   setEditAdministrator: (isOpen: boolean) => void;
+  // Settings
+
+  setAddCategory: (isOpen: boolean) => void;
+  setEditCategory: (isOpen: boolean) => void;
 }
 
 const useDialogStore = create<DialogState>((set) => ({
@@ -58,6 +64,12 @@ const useDialogStore = create<DialogState>((set) => ({
     set({ openDialog: isOpen ? "add_administrator" : null }),
   setEditAdministrator: (isOpen) =>
     set({ openDialog: isOpen ? "edit_administrator" : null }),
+  // Settings
+  setAddCategory: (isOpen) =>
+    set({ openDialog: isOpen ? "add_category" : null }),
+  setEditCategory: (isOpen) =>
+    set({ openDialog: isOpen ? "edit_category" : null }),
+
 }));
 
 export default useDialogStore;

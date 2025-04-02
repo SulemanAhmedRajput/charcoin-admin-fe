@@ -1,9 +1,13 @@
+"use client";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
+import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import { AddCategory } from "@/components/settings/add-category";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { HeartPlus, DropSolid } from "@mynaui/icons-react";
+import useDialogStore from "@/stores/dialog-store";
+import { HeartPlus, DropSolid, Cookie, Drop, Activity, AcademicHat, Accessibility, ArrowRight } from "@mynaui/icons-react";
 
 const categories = [
   {
@@ -11,105 +15,25 @@ const categories = [
     projects: 0,
     news: 10,
     icon: HeartPlus,
+    color: "#D83A3A",
   },
-  { name: "Food Security & Nutrition", projects: 0, news: 8, icon: HeartPlus },
-  { name: "Clean Water & Sanitation", projects: 0, news: 5, icon: HeartPlus },
+  { name: "Food Security & Nutrition", projects: 0, news: 8, icon: Cookie, color: "#843AD8" },
+  { name: "Clean Water & Sanitation", projects: 0, news: 5, icon: Drop, color: "#D83AC8" },
   {
     name: "Medical & Healthcare Support",
     projects: 0,
     news: 12,
-    icon: HeartPlus,
+    icon: AcademicHat,
+    color: "#B8D83A"
   },
   {
     name: "Education & Literacy Programs",
     projects: 10,
     news: 12,
-    icon: HeartPlus,
+    icon: Accessibility,
+    color: "#3DD83A"
   },
-  {
-    name: "Refugees & Displacement Aid",
-    projects: 0,
-    news: 11,
-    icon: HeartPlus,
-  },
-  {
-    name: "Disaster Relief Assistance",
-    projects: 0,
-    news: 10,
-    icon: HeartPlus,
-  },
-  { name: "Food Security & Nutrition", projects: 0, news: 8, icon: HeartPlus },
-  { name: "Clean Water & Sanitation", projects: 0, news: 5, icon: HeartPlus },
-  {
-    name: "Medical & Healthcare Support",
-    projects: 0,
-    news: 12,
-    icon: HeartPlus,
-  },
-  {
-    name: "Education & Literacy Programs",
-    projects: 10,
-    news: 12,
-    icon: HeartPlus,
-  },
-  {
-    name: "Refugees & Displacement Aid",
-    projects: 0,
-    news: 11,
-    icon: HeartPlus,
-  },
-  {
-    name: "Disaster Relief Assistance",
-    projects: 0,
-    news: 10,
-    icon: HeartPlus,
-  },
-  { name: "Food Security & Nutrition", projects: 0, news: 8, icon: HeartPlus },
-  { name: "Clean Water & Sanitation", projects: 0, news: 5, icon: HeartPlus },
-  {
-    name: "Medical & Healthcare Support",
-    projects: 0,
-    news: 12,
-    icon: HeartPlus,
-  },
-  {
-    name: "Education & Literacy Programs",
-    projects: 10,
-    news: 12,
-    icon: HeartPlus,
-  },
-  {
-    name: "Refugees & Displacement Aid",
-    projects: 0,
-    news: 11,
-    icon: HeartPlus,
-  },
-  {
-    name: "Disaster Relief Assistance",
-    projects: 0,
-    news: 10,
-    icon: HeartPlus,
-  },
-  { name: "Food Security & Nutrition", projects: 0, news: 8, icon: HeartPlus },
-  { name: "Clean Water & Sanitation", projects: 0, news: 5, icon: HeartPlus },
-  {
-    name: "Medical & Healthcare Support",
-    projects: 0,
-    news: 12,
-    icon: HeartPlus,
-  },
-  {
-    name: "Education & Literacy Programs",
-    projects: 10,
-    news: 12,
-    icon: HeartPlus,
-  },
-  {
-    name: "Refugees & Displacement Aid",
-    projects: 0,
-    news: 11,
-    icon: HeartPlus,
-  },
+
 ];
 
 const campaigns = [
@@ -118,6 +42,7 @@ const campaigns = [
     duration: "From May 1 to May 20, 2025",
     status: "Upcoming",
     icon: HeartPlus,
+
   },
   {
     name: "April 2025",
@@ -165,13 +90,17 @@ const campaigns = [
 ];
 
 const SettingsCauses = () => {
+  const { openDialog, setAddCategory, setEditCategory } = useDialogStore()
+
+
+
   return (
     <div>
       <HeaderWrapper
         title="Dapp Global Settings - Causes"
         description="Manage settings related to the causes / projects in the CharCoin ecosystem"
       />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6  text-white min-h-screen">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-3 max-md:p-0  text-white min-h-screen">
         {/* Categories Section */}
         <Card className="bg-background">
           <CardHeader >
@@ -180,8 +109,12 @@ const SettingsCauses = () => {
               Manage the categories available for the causes/projects and news
               sections
             </p>
-            <Button size={"lg"} className="w-max">
-              Add new →
+            <Button size={"lg"} endIcon={ArrowRight} iconProps={{
+              className: "!w-5 !h-5"
+            }} className="w-max"
+            onClick={() => setAddCategory(true)}
+            >
+              Add new
             </Button>
           </CardHeader>
           <CardContent>
@@ -192,9 +125,11 @@ const SettingsCauses = () => {
                   key={index}
                   className="flex justify-between space-x-4  p-3 border-b "
                 >
-                  <div  className="min-w-1  bg-primary rounded-xl "/>
+                  <div className={cn("min-w-[3px]   rounded-xl ",)} style={{
+                    backgroundColor: category.color
+                  }} />
                   <div className="flex items-center gap-3">
-                    <category.icon className="text-teal-400" size={40} />
+                    <category.icon size={40} />
                   </div>
                   <div className="w-full flex flex-col">
                     <span>{category.name}</span>
@@ -216,8 +151,13 @@ const SettingsCauses = () => {
               Manage the categories available for the causes/projects and news
               sections
             </p>
-            <Button size={"lg"} className="w-max">
-              Add new →
+            <Button size={"lg"} endIcon={ArrowRight} iconProps={{
+              className: "!w-5 !h-5"
+            }} className="w-max"
+            onClick={() => setAddCategory(true)}
+
+            >
+              Add new
             </Button>
           </CardHeader>
           <CardContent>
@@ -243,6 +183,22 @@ const SettingsCauses = () => {
           </CardContent>
         </Card>
       </div>
+      <CustomSheet
+        isOpen={openDialog == "add_category"}
+        setIsOpen={setAddCategory}
+        title="Add Category form"
+        className="pt-2 px-4"
+      >
+        <AddCategory />
+      </CustomSheet>
+      <CustomSheet
+        isOpen={openDialog == "edit_category"}
+        setIsOpen={setEditCategory}
+        title="Edit Cateogyr form"
+        className="pt-2 px-4"
+      >
+        abc
+      </CustomSheet>
     </div>
   );
 };
