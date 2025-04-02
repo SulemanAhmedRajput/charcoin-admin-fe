@@ -1,39 +1,31 @@
+import { format, parseISO } from "date-fns";
+
+// Get ordinal suffix for a number (1st, 2nd, 3rd, etc.)
 export const getOrdinalSuffix = (num: number) => {
   if ([11, 12, 13].includes(num % 100)) return "th";
-  switch (num % 10) {
-    case 1:
-      return "st";
-    case 2:
-      return "nd";
-    case 3:
-      return "rd";
-    default:
-      return "th";
-  }
+  const suffixes = ["th", "st", "nd", "rd"];
+  const mod10 = num % 10;
+  return suffixes[mod10] || suffixes[0];
 };
 
+
+// Format number with an ordinal suffix
 export const formatNumberWithOrdinal = (num: number) => {
-  if (!num) return ""; // Handle invalid or undefined values
-  const formattedNumber = num.toLocaleString(); // Add commas
-  return `${formattedNumber}`;
+  if (!num) return "";
+  return `${num.toLocaleString()}${getOrdinalSuffix(num)}`;
 };
 
-export const formatDate = (date: Date) => {
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+// Format date using date-fns
+export const formatDate = (date: Date | string) => {
+  return format(typeof date === "string" ? parseISO(date) : date, "MMM d, yyyy");
 };
 
-
-
+// Convert RGBA to HEX
 export function rgbaToHex(rgba: string): string {
-  // Extract values from rgba string using regex
   const match = rgba.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
   if (!match) return "#000000"; // Default to black if invalid
 
-  let [_, r, g, b, a] = match; // Extracted values as strings
+  let [_, r, g, b, a] = match; // Extract values as strings
   r = parseInt(r).toString(16).padStart(2, "0");
   g = parseInt(g).toString(16).padStart(2, "0");
   b = parseInt(b).toString(16).padStart(2, "0");
@@ -47,3 +39,22 @@ export function rgbaToHex(rgba: string): string {
 
   return `#${r}${g}${b}`.toUpperCase(); // RGB to HEX
 }
+
+export const formatDateRange = (startIso: string, endIso: string) => {
+  if (!startIso || !endIso) {
+    return "Invalid date"; // Handle missing dates
+  }
+
+  const startDate = parseISO(startIso);
+  const endDate = parseISO(endIso);
+
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    return "Invalid date range"; // Handle parsing failure
+  }
+
+  if (startDate.getFullYear() === endDate.getFullYear()) {
+    return `${format(startDate, "MMM d")} to ${format(endDate, "MMM d, yyyy")}`;
+  }
+
+  return `${format(startDate, "MMM d, yyyy")} to ${format(endDate, "MMM d, yyyy")}`;
+};

@@ -6,9 +6,11 @@ import { EditCategory } from "@/components/settings/edit-category";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { formatDateRange } from "@/lib/helper";
 import { cn } from "@/lib/utils";
 import useDialogStore from "@/stores/dialog-store";
 import { HeartPlus, DropSolid, Cookie, Drop, Activity, AcademicHat, Accessibility, ArrowRight } from "@mynaui/icons-react";
+import { formatDate } from "date-fns";
 
 const categories = [
   {
@@ -39,56 +41,74 @@ const categories = [
 
 const campaigns = [
   {
-    name: "May 2025",
-    duration: "From May 1 to May 20, 2025",
-    status: "Upcoming",
-    icon: HeartPlus,
+    "title": "2025-05-01T00:00:00.000Z",
+    "date_range": "2025-05-01T00:00:00.000Z to 2025-05-20T00:00:00.000Z",
+    "start_date": "2025-05-01T00:00:00.000Z",
+    "end_date": "2025-05-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#0088FF"
+    
+  },
+  {
+    "title": "2025-04-01T00:00:00.000Z",
+    "date_range": "2025-04-01T00:00:00.000Z to 2025-04-20T00:00:00.000Z",
+    "start_date": "2025-04-01T00:00:00.000Z",
+    "end_date": "2025-04-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#AAAAAA"
+  },
+  {
+    "title": "2025-03-01T00:00:00.000Z",
+    "date_range": "2025-03-01T00:00:00.000Z to 2025-03-20T00:00:00.000Z",
+    "start_date": "2025-03-01T00:00:00.000Z",
+    "end_date": "2025-03-20T00:00:00.000Z",
+    "status": "Current",
+    "color": "#00FF88"
+  },
+  {
+    "title": "2025-02-01T00:00:00.000Z",
+    "date_range": "2025-02-01T00:00:00.000Z to 2025-02-20T00:00:00.000Z",
+    "start_date": "2025-02-01T00:00:00.000Z",
+    "end_date": "2025-02-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#2B2B2B"
+  },
+  {
+    "title": "2025-01-01T00:00:00.000Z",
+    "date_range": "2025-01-01T00:00:00.000Z to 2025-01-20T00:00:00.000Z",
+    "start_date": "2025-01-01T00:00:00.000Z",
+    "end_date": "2025-01-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#00FF88"
+  },
+ 
+  {
+    "title": "2024-12-01T00:00:00.000Z",
+    "date_range": "2024-12-01T00:00:00.000Z to 2024-12-20T00:00:00.000Z",
+    "start_date": "2024-12-01T00:00:00.000Z",
+    "end_date": "2024-12-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#00FF88"
+  },
+  {
+    "title": "2025-11-01T00:00:00.000Z",
+    "date_range": "2025-11-01T00:00:00.000Z to 2025-11-20T00:00:00.000Z",
+    "start_date": "2025-11-01T00:00:00.000Z",
+    "end_date": "2025-11-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#00FF88"
+  },
+  {
+    "title": "2025-10-01T00:00:00.000Z",
+    "date_range": "2025-10-01T00:00:00.000Z to 2025-10-20T00:00:00.000Z",
+    "start_date": "2025-10-01T00:00:00.000Z",
+    "end_date": "2025-10-20T00:00:00.000Z",
+    "status": "Upcoming",
+    "color": "#00FF88"
+  }
+]
 
-  },
-  {
-    name: "April 2025",
-    duration: "From April 1 to April 20, 2025",
-    status: "Upcoming",
-    icon: HeartPlus,
-  },
-  {
-    name: "March 2025",
-    duration: "From March 1 to March 20, 2025",
-    status: "Current",
-    icon: HeartPlus,
-  },
-  {
-    name: "February 2025",
-    duration: "From February 1 to February 20, 2025",
-    icon: HeartPlus,
-  },
-  {
-    name: "January 2025",
-    duration: "From January 1 to January 30, 2025",
-    icon: HeartPlus,
-  },
-  {
-    name: "Annual Campaign, 2024",
-    duration:
-      "Special campaign considering all people and causes/projects that participated in the year.",
-    icon: HeartPlus,
-  },
-  {
-    name: "December 2024",
-    duration: "From December 1 to December 30, 2025",
-    icon: HeartPlus,
-  },
-  {
-    name: "November 2025",
-    duration: "From November 1 to November 20, 2025",
-    icon: HeartPlus,
-  },
-  {
-    name: "October 2025",
-    duration: "From October 1 to October 20, 2025",
-    icon: HeartPlus,
-  },
-];
+
 
 const SettingsCauses = () => {
   const { openDialog, setAddCategory, setEditCategory } = useDialogStore()
@@ -113,7 +133,7 @@ const SettingsCauses = () => {
             <Button size={"lg"} endIcon={ArrowRight} iconProps={{
               className: "!w-5 !h-5"
             }} className="w-max"
-            onClick={() => setAddCategory(true)}
+              onClick={() => setAddCategory(true)}
             >
               Add new
             </Button>
@@ -125,7 +145,7 @@ const SettingsCauses = () => {
                 <div
                   key={index}
                   className="flex justify-between space-x-4  p-3 border-b "
-                  onClick={() =>  setEditCategory(true)}
+                  onClick={() => setEditCategory(true)}
                 >
                   <div className={cn("min-w-[3px]   rounded-xl ",)} style={{
                     backgroundColor: category.color
@@ -148,15 +168,14 @@ const SettingsCauses = () => {
         {/* Campaigns Section */}
         <Card className="bg-background">
           <CardHeader >
-            <CardTitle className="text-xl">Categories</CardTitle>
+            <CardTitle className="text-xl">Campaigns</CardTitle>
             <p className="text-sm text-gray-400">
-              Manage the categories available for the causes/projects and news
-              sections
+              Manage the campaigns available for the causes / projects in the entire ecosystem
             </p>
             <Button size={"lg"} endIcon={ArrowRight} iconProps={{
               className: "!w-5 !h-5"
             }} className="w-max"
-            onClick={() => setAddCategory(true)}
+              onClick={() => setEditCategory(true)}
 
             >
               Add new
@@ -165,19 +184,20 @@ const SettingsCauses = () => {
           <CardContent>
             <hr />
             <ScrollArea className="h-[540px]">
-              {categories.map((category, index) => (
+              {campaigns.map((campaign, index) => (
                 <div
                   key={index}
-                  className="flex justify-between space-x-4 items-center p-3 border-b "
+                  className="flex   space-x-4  p-3 border-b "
                 >
-                  <div className="flex items-center gap-3">
-                    <category.icon className="text-teal-400" size={40} />
-                  </div>
-                  <div className="w-full flex flex-col">
-                    <span>{category.name}</span>
-                    <span className="text-gray-400">
-                      {category.projects} projects, {category.news} news
-                    </span>
+
+                  <div className={cn("min-w-[3px] w-min h-12   rounded-xl ",)} style={{
+                    backgroundColor: campaign?.color
+                  }} />                  <div className="w-full flex flex-col">
+                    <span>{formatDate(campaign.title, "MMMM, yyyy")}</span>
+                    <span className="text-sm flex gap-2 text-muted-foreground">{formatDateRange(campaign.start_date as string, campaign.end_date as string)} {campaign?.status == "Current" && <p className="text-primary tracking-wider">(Current)</p>} </span>
+                    {/* <span className="text-gray-400">
+                      {campaign.projects} projects, {campaign.news} news
+                    </span> */}
                   </div>
                 </div>
               ))}
