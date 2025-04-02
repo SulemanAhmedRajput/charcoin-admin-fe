@@ -98,7 +98,7 @@ export const CauseDetail = () => {
         <hr className="bg-[#323138] " />
         {/* Wallet Information */}
         <div className="flex justify-between flex-wrap text-sm">
-          <p className="text-primary !break-words  ">
+          <p className="text-primary !break-words line-clamp-1  ">
             0xfd88987b67c265fe57f1bdb3b57d97b717ef567e20bd18ba3c2a780040f15634d6fe
             <br />
             <span className="text-muted-foreground">

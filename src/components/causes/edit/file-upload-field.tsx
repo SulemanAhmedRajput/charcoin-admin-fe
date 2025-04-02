@@ -41,7 +41,7 @@ export default function FileUploadSection({
         {file ? file.name : "No file selected"}
       </div>
 
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 max-sm:flex-col flex-row mt-4">
         <Button
           type="button"
           size={"lg"}

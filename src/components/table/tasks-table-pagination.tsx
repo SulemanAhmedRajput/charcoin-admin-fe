@@ -59,7 +59,7 @@ export function DataTablePagination<TData>({
         </div>
 
         {/* Page Info */}
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+        <div className="flex w-[100px] max-md:hidden items-center justify-center text-sm font-medium">
           Page {pageIndex + 1} of {pageCount}
         </div>
 
@@ -68,7 +68,7 @@ export function DataTablePagination<TData>({
           {/* First Page */}
           <Button
             variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="  max-lg:hidden h-8 w-8 p-0 flex" 
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
@@ -113,7 +113,7 @@ export function DataTablePagination<TData>({
           {/* Last Page */}
           <Button
             variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
+            className="  max-lg:hidden h-8 w-8 p-0 flex" 
             onClick={() => table.setPageIndex(pageCount - 1)}
             disabled={!table.getCanNextPage()}
           >

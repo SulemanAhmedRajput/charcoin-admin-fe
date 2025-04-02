@@ -52,9 +52,9 @@ const rewardsData = [
 const Dashboard = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   return (
-    <div className="mx-4 py-6 space-y-6">
-      <div className=" flex justify-between">
-        <h1 className="text-3xl font-bold ">Dashboard</h1>
+    <div className=" py-6 space-y-6">
+      <div className=" flex justify-between max-sm:flex-col max-sm:items-end gap-4 ">
+        <h1 className="text-3xl font-bold  max-sm:w-full">Dashboard</h1>
         <DateSelector date={date} setDate={setDate} />
       </div>
       <div className="grid grid-cols-2 max-lg:grid-cols-1 gap-4">
