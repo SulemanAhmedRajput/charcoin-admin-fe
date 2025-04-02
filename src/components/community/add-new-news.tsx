@@ -57,7 +57,7 @@ const CreateNfts = () => {
   };
 
   return (
-    <div className="px-4 flex flex-col gap-8">
+    <div className="px-4 max-md:p-0 flex flex-col gap-8">
       <HeaderWrapper
         title="Create a new Official NFT"
         description="Complete the following fields to create and mint a new NFT."

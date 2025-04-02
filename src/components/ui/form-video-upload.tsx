@@ -85,7 +85,7 @@ export default function VideoUploadSection({
       </div>
 
       {/* Upload & Delete Buttons */}
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4 mt-4 max-sm:flex-col">
         <Button
           type="button"
           onClick={() => fileInputRef.current?.click()}

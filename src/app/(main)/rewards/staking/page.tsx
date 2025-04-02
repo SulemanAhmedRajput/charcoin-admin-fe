@@ -130,6 +130,7 @@ const TopTiers = () => {
 
   return (
     <HeaderWrapper
+    mainClassName="!justify-start items-start gap-4 max-md:flex-col" 
       title="Staking"
       description="List of users staking the CharCoin Token"
       actions={
