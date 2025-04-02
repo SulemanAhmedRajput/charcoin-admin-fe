@@ -13,6 +13,8 @@ interface DialogState {
   | "edit_administrator"
   | "add_category"
   | "edit_category"
+  | "add_campaign"
+  | "edit_campaign"
   | null;
 
   openDetail: () => void;
@@ -31,9 +33,10 @@ interface DialogState {
   setAddAdministrator: (isOpen: boolean) => void;
   setEditAdministrator: (isOpen: boolean) => void;
   // Settings
-
   setAddCategory: (isOpen: boolean) => void;
   setEditCategory: (isOpen: boolean) => void;
+  setAddCampaign: (isOpen: boolean) => void;
+  setEditCampaign: (isOpen: boolean) => void;
 }
 
 const useDialogStore = create<DialogState>((set) => ({
@@ -69,6 +72,10 @@ const useDialogStore = create<DialogState>((set) => ({
     set({ openDialog: isOpen ? "add_category" : null }),
   setEditCategory: (isOpen) =>
     set({ openDialog: isOpen ? "edit_category" : null }),
+  setAddCampaign: (isOpen) =>
+    set({ openDialog: isOpen ? "add_campaign" : null }),
+  setEditCampaign: (isOpen) =>
+    set({ openDialog: isOpen ? "edit_campaign" : null }),
 
 }));
 

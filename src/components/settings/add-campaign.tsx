@@ -1,18 +1,18 @@
-import { CategorySchemaType } from "@/schemas/category-schema";
-import CategoryForm from "./category-form";
+import { CampaignSchemaType } from "@/schemas/campaign-schema";
+import CampaignForm from "./campaign-form";
 
-const AddCategory = () => {
-    const handleSubmit = (data: CategorySchemaType) => {
+const AddCampaign = () => {
+    const handleSubmit = (data: CampaignSchemaType) => {
         console.log(data);
         // Handle form submission logic here
     };
 
     return (
-        <CategoryForm
+        <CampaignForm
             mode="add"
             onSubmit={handleSubmit}
         />
     );
 };
 
-export { AddCategory};
+export { AddCampaign };

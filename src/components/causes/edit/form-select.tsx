@@ -46,8 +46,8 @@ const selectVariants = cva(
 export interface SelectFieldProps extends VariantProps<typeof selectVariants> {
   options: { value: string; label: string }[];
   placeholder?: string;
-  value?: string;
-  onValueChange: (value: string) => void;
+  value?: string ;
+  onValueChange: (value: string ) => void;
   className?: string;
   triggerIcon?: React.ReactNode
 }
@@ -63,7 +63,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   onValueChange,
   triggerIcon,
 }) => {
-  
+
   return (
     <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger

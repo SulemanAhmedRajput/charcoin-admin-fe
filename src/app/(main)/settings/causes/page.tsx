@@ -1,7 +1,9 @@
 "use client";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
 import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
+import { AddCampaign } from "@/components/settings/add-campaign";
 import { AddCategory } from "@/components/settings/add-category";
+import { EditCampaign } from "@/components/settings/edit-campaign";
 import { EditCategory } from "@/components/settings/edit-category";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -47,7 +49,7 @@ const campaigns = [
     "end_date": "2025-05-20T00:00:00.000Z",
     "status": "Upcoming",
     "color": "#0088FF"
-    
+
   },
   {
     "title": "2025-04-01T00:00:00.000Z",
@@ -81,7 +83,7 @@ const campaigns = [
     "status": "Upcoming",
     "color": "#00FF88"
   },
- 
+
   {
     "title": "2024-12-01T00:00:00.000Z",
     "date_range": "2024-12-01T00:00:00.000Z to 2024-12-20T00:00:00.000Z",
@@ -111,7 +113,7 @@ const campaigns = [
 
 
 const SettingsCauses = () => {
-  const { openDialog, setAddCategory, setEditCategory } = useDialogStore()
+  const { openDialog, setAddCategory, setEditCategory, setAddCampaign, setEditCampaign } = useDialogStore()
 
 
 
@@ -175,7 +177,7 @@ const SettingsCauses = () => {
             <Button size={"lg"} endIcon={ArrowRight} iconProps={{
               className: "!w-5 !h-5"
             }} className="w-max"
-              onClick={() => setEditCategory(true)}
+              onClick={() => setAddCampaign(true)}
 
             >
               Add new
@@ -188,6 +190,7 @@ const SettingsCauses = () => {
                 <div
                   key={index}
                   className="flex   space-x-4  p-3 border-b "
+                  onClick={() => setEditCampaign(true)}
                 >
 
                   <div className={cn("min-w-[3px] w-min h-12   rounded-xl ",)} style={{
@@ -195,9 +198,7 @@ const SettingsCauses = () => {
                   }} />                  <div className="w-full flex flex-col">
                     <span>{formatDate(campaign.title, "MMMM, yyyy")}</span>
                     <span className="text-sm flex gap-2 text-muted-foreground">{formatDateRange(campaign.start_date as string, campaign.end_date as string)} {campaign?.status == "Current" && <p className="text-primary tracking-wider">(Current)</p>} </span>
-                    {/* <span className="text-gray-400">
-                      {campaign.projects} projects, {campaign.news} news
-                    </span> */}
+
                   </div>
                 </div>
               ))}
@@ -220,6 +221,23 @@ const SettingsCauses = () => {
         className="pt-2 px-4"
       >
         <EditCategory />
+      </CustomSheet>
+
+      <CustomSheet
+        isOpen={openDialog == "add_campaign"}
+        setIsOpen={setAddCampaign}
+        title="Add Campaign form"
+        className="pt-2 px-4"
+      >
+        <AddCampaign />
+      </CustomSheet>
+      <CustomSheet
+        isOpen={openDialog == "edit_campaign"}
+        setIsOpen={setEditCampaign}
+        title="Edit Campaign form"
+        className="pt-2 px-4"
+      >
+        <EditCampaign />
       </CustomSheet>
     </div>
   );

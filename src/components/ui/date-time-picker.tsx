@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
@@ -13,13 +12,23 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { CalendarCheckSolid } from "@mynaui/icons-react";
+import { Calendar as CalendarIcon } from "@mynaui/icons-react";
 
 export function DateTimePicker({
   date,
   setDate,
+  size = "default",
+  className,
+  position = "left",
+  iconClassName = ""
 }: {
   date: Date;
   setDate: React.Dispatch<React.SetStateAction<Date>>;
+  size?: "lg" | "sm" | "default" | "icon" | "main_btn";
+  className?: string
+  position?: "left" | "right"
+  iconClassName?: string
 }) {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -57,17 +66,22 @@ export function DateTimePicker({
       <PopoverTrigger asChild>
         <Button
           variant="newly_darken"
+          size={size}
           className={cn(
-            " justify-start text-left font-normal",
-            !date && "text-muted-foreground"
+            "justify-start text-left font-normal",
+            !date && "text-muted-foreground",
+            className
           )}
+          
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          {position === "left" && <CalendarIcon className={cn("mr-2 h-4 w-4", iconClassName)} />}
           {date ? (
             format(date, "MM/dd/yyyy hh:mm aa")
           ) : (
             <span>MM/DD/YYYY hh:mm aa</span>
           )}
+          {position === "right" && <CalendarIcon className={cn("ml-auto h-4 w-4", iconClassName)} />}
+
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -84,7 +98,6 @@ export function DateTimePicker({
                 {hours.reverse().map((hour) => (
                   <Button
                     key={hour}
-                    size="icon"
                     variant={
                       date && date.getHours() % 12 === hour % 12
                         ? "default"
@@ -104,7 +117,6 @@ export function DateTimePicker({
                 {Array.from({ length: 12 }, (_, i) => i * 5).map((minute) => (
                   <Button
                     key={minute}
-                    size="icon"
                     variant={
                       date && date.getMinutes() === minute ? "default" : "ghost"
                     }
@@ -124,7 +136,6 @@ export function DateTimePicker({
                 {["AM", "PM"].map((ampm) => (
                   <Button
                     key={ampm}
-                    size="icon"
                     variant={
                       date &&
                       ((ampm === "AM" && date.getHours() < 12) ||
