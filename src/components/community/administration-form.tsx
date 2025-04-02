@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 import { Label } from "../ui/label";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "@mynaui/icons-react";
 
 type PermissionPath = {
   path: string;
@@ -259,7 +260,7 @@ export const AdministratorForm = ({
   };
 
   return (
-    <div className="px-5">
+    <div className="px-5 max-md:p-3">
       <div className="mx-8 mt-2">
         <HeaderWrapper
           title={mode === "add" ? "Add Administrator" : "Edit Administrator"}
@@ -274,12 +275,13 @@ export const AdministratorForm = ({
 
       <FormProvider {...formMethods}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-8 grid grid-cols-2 max-md:grid-cols-1 gap-4">
+          <div className="mb-8 grid grid-cols-2 max-md:!grid-cols-1 gap-4">
             {/* Main Details Section */}
-            <FormSectionTitle title="Main details" className="col-span-2" />
+            <FormSectionTitle title="Main details" className="col-span-2 max-md:grid-cols-1" />
 
             {/* Main Details Section */}
-            <FormField
+           <div className="grid grid-cols-2 max-md:grid-cols-1 gap-4 w-full  col-span-2">
+           <FormField
               id="username"
               label="Username"
               description="Choose a unique username"
@@ -400,6 +402,7 @@ export const AdministratorForm = ({
                 className="object-cover w-20 h-20 "
               />
             </div>
+           </div>
 
             {/* Permissions Section */}
             <FormSectionTitle title="Permissions" className="col-span-2 mt-6" />
@@ -415,34 +418,39 @@ export const AdministratorForm = ({
           </div>
 
           {/* Form Actions */}
-          <div className="flex justify-end gap-4 mt-8">
-            {mode === "edit" && onDelete && (
-              <Button
-                type="button"
-                variant="outline"
-                size="lg"
-                className="border-destructive text-destructive hover:text-destructive"
-                onClick={onDelete}
-                disabled={isSubmitting}
-              >
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete Administrator
-              </Button>
-            )}
+          <div className="flex justify-end gap-4 my-8 max-md:flex-col">
+           
             <Button
               type="submit"
               size="lg"
-              className="bg-primary hover:bg-primary/90"
+              className="bg-primary  hover:bg-primary/90"
               disabled={isSubmitting}
+              endIcon={ArrowRight}
+              iconProps={{
+                className: cn("!h-5 !w-5"),
+              }}
             >
               {isSubmitting ? (
                 <span>Processing...</span>
               ) : mode === "add" ? (
                 "Create Administrator"
               ) : (
-                "Save Changes"
+                "Update Administrator"
               )}
             </Button>
+            {mode === "edit" && onDelete && (
+              <Button
+                type="button"
+                variant="destructive"
+                size="lg"
+                onClick={onDelete}
+                disabled={isSubmitting}
+                startIcon={Trash2}
+              >
+                Delete 
+              </Button>
+            )}
+            
           </div>
         </form>
       </FormProvider>

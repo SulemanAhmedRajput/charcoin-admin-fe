@@ -92,6 +92,7 @@ const News = () => {
       actions={
         <Button
           size={"lg"}
+          className="max-md:px-4 max-md:h-10 ml-4"
           onClick={() => {
             setCommunityUserWalletAdd(true);
           }}
@@ -101,7 +102,7 @@ const News = () => {
       }
     >
       <div className="mb-6 ">
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-4 mb-4 max-md:flex-col">
           <SelectField
             variant="newly_secondary"
             className="w-[180px]"

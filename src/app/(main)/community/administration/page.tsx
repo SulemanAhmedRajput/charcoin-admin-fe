@@ -104,11 +104,12 @@ const AdministrationPage = () => {
 
   return (
     <HeaderWrapper
-      title="News"
-      description="Public news about the progress of each donation and the CharCoin impact"
+      title="Administrators"
+      description="Users with privilege access in the CharCoin ecosystem"
       actions={
         <Button
           size={"lg"}
+          className="max-md:px-4 max-md:h-10 ml-4"
           onClick={() => {
             setCommunityAdministrationAdd(true);
           }}
@@ -119,13 +120,12 @@ const AdministrationPage = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <DateTimePicker date={date} setDate={setDate} />
-
+      
           <div className="relative  w-80 ">
             <Input
               className="!w-full !bg-[#3D3C44] "
               variant={"newly_secondary"}
-              placeholder="Search by username, wallet, or hash"
+              placeholder="Search by Username"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -143,7 +143,7 @@ const AdministrationPage = () => {
         isOpen={openDialog == "community_administration_add"}
         setIsOpen={setCommunityAdministrationAdd}
         title="Edit Cause form"
-        className="pt-2 px-4"
+        className="!p-0"
       >
         <AddAdministrator />
       </CustomSheet>
