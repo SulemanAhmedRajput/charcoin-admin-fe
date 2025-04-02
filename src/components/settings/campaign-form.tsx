@@ -116,7 +116,6 @@ const CampaignForm
 
                         <FormSectionTitle title="Main details" />
 
-{JSON.stringify(errors, null, 2)}
                         <FormField
                             id="category-name"
                             label="Category name"
