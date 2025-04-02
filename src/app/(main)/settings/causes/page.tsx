@@ -2,6 +2,7 @@
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
 import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
 import { AddCategory } from "@/components/settings/add-category";
+import { EditCategory } from "@/components/settings/edit-category";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -124,6 +125,7 @@ const SettingsCauses = () => {
                 <div
                   key={index}
                   className="flex justify-between space-x-4  p-3 border-b "
+                  onClick={() =>  setEditCategory(true)}
                 >
                   <div className={cn("min-w-[3px]   rounded-xl ",)} style={{
                     backgroundColor: category.color
@@ -197,7 +199,7 @@ const SettingsCauses = () => {
         title="Edit Cateogyr form"
         className="pt-2 px-4"
       >
-        abc
+        <EditCategory />
       </CustomSheet>
     </div>
   );

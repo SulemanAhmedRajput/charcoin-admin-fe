@@ -10,8 +10,8 @@ export default function FormSectionTitle({
   ...props
 }: FormSectionTitleProps) {
   return (
-    <div className="col-span-2">
-      <h2 className="text-xl mb-4  pb-2" {...props}>
+    <div className="col-span-2 mb-4 flex flex-col  " {...props}>
+      <h2 className="!text-lg " >
         {title}
       </h2>
       <hr className="col-span-2 border-accent" />
