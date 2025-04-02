@@ -4,16 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Search } from "lucide-react";
 import { useState } from "react";
 
+import { SelectField } from "@/components/causes/edit/form-select";
 import { UserWalletColumns } from "@/components/columns/user-wallet-column";
 import { AddUserWallet } from "@/components/community/add-user-wallet";
 import { UserWalletTable } from "@/components/community/user-wallet-table";
 import { HeaderWrapper } from "@/components/custom/header-wrapper";
 import { CustomSheet } from "@/components/reuseable/add-causes-sheet";
 import { Button } from "@/components/ui/button";
-import { DateTimePicker } from "@/components/ui/date-time-picker";
 import { Input } from "@/components/ui/input";
 import useDialogStore from "@/stores/dialog-store";
 import { UserStatus, UserWallet } from "@/types/user-and-wallet";
+import { Sort } from "@mynaui/icons-react";
 const newsExample: UserWallet[] = [
   {
     id: 12458,
@@ -53,35 +54,41 @@ const newsExample: UserWallet[] = [
 // ✅ Explicitly define the return type as `Promise<TransactionRecord[]>`
 const fetchTransactions = async (
   query = "",
-  month = new Date()
+  status = ""
 ): Promise<UserWallet[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const filtered = newsExample.filter(
-        (record) => record.username.toLowerCase().includes(query.toLowerCase())
-        // record.username.toLowerCase().includes(query.toLowerCase()) ||
-        // record.wallet.toLowerCase().includes(query.toLowerCase()) ||
-        // record.hash.toLowerCase().includes(query.toLowerCase())
-      );
+      const filtered = newsExample.filter((record) => {
+        const matchesQuery =
+          record.username.toLowerCase().includes(query.toLowerCase()) ||
+          record.wallet.toLowerCase().includes(query.toLowerCase());
+
+        const matchesStatus =
+          status === "" || record.status.toLowerCase() === status.toLowerCase();
+
+        return matchesQuery && matchesStatus;
+      });
+
       resolve(filtered);
     }, 500);
   });
 };
 
+
 const News = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [date, setDate] = useState<Date>(new Date);
+  const [status, setStatus] = useState<string>("");
   const { openDialog, setCommunityUserWalletAdd } = useDialogStore();
 
   const { data = [], isLoading } = useQuery<UserWallet[]>({
-    queryKey: ["user-wallet", searchQuery, date],
-    queryFn: () => fetchTransactions(searchQuery, date),
+    queryKey: ["user-wallet", searchQuery, status],
+    queryFn: () => fetchTransactions(searchQuery, status),
   });
 
   return (
     <HeaderWrapper
-      title="News"
-      description="Public news about the progress of each donation and the CharCoin impact"
+      title="Users & Wallets"
+      description="Listing all the users/wallets in the CharCoin ecosystem"
       actions={
         <Button
           size={"lg"}
@@ -95,14 +102,26 @@ const News = () => {
     >
       <div className="mb-6 ">
         <div className="flex items-center gap-4 mb-4">
-          <DateTimePicker date = {date  } setDate={setDate} />
-        
+          <SelectField
+            variant="newly_secondary"
+            className="w-[180px]"
+            placeholder="Select Status"
+            triggerIcon={<Sort className="h-6 w-6" />}
+            value={status || "all"} // Show "all" when status is empty
+            onValueChange={(value) => setStatus(value === "all" ? "" : value)} // Convert "all" to empty string
+            options={[
+              { value: "all", label: "All" }, // Use "all" instead of empty string
+              { value: "Active", label: "Active" },
+              { value: "Blocked", label: "Blocked" },
+            ]}
+          />
+
 
           <div className="relative  w-80 ">
             <Input
               className="!w-full !bg-[#3D3C44] "
               variant={"newly_secondary"}
-              placeholder="Search by username, wallet, or hash"
+              placeholder="Search by Wallet/Username"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

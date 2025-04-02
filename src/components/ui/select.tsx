@@ -46,12 +46,14 @@ const SelectValue = SelectPrimitive.Value;
 
 interface SelectTriggerProps
   extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>,
-    VariantProps<typeof selectVariants> {}
+    VariantProps<typeof selectVariants> {
+  customIcon?: React.ReactNode; // Accept custom icon as prop
+}
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   SelectTriggerProps
->(({ className, variant, selectSize, rounded, children, ...props }, ref) => (
+>(({ className, variant, selectSize, rounded, children, customIcon, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -63,11 +65,13 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
+      {customIcon || <ChevronDown className="h-4 w-4 opacity-50" />} 
+      {/* Use customIcon if provided, else fallback to ChevronDown */}
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+
 
 const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,

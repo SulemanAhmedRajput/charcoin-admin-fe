@@ -49,6 +49,7 @@ export interface SelectFieldProps extends VariantProps<typeof selectVariants> {
   value?: string;
   onValueChange: (value: string) => void;
   className?: string;
+  triggerIcon?: React.ReactNode
 }
 
 const SelectField: React.FC<SelectFieldProps> = ({
@@ -60,13 +61,16 @@ const SelectField: React.FC<SelectFieldProps> = ({
   placeholder = "Select an option",
   value,
   onValueChange,
+  triggerIcon,
 }) => {
+  
   return (
-    <Select defaultValue={value} onValueChange={onValueChange}>
+    <Select value={value} onValueChange={onValueChange}>
       <SelectTrigger
         className={cn(
           selectVariants({ variant, selectSize, rounded, className })
         )}
+        customIcon={triggerIcon}
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
@@ -80,5 +84,6 @@ const SelectField: React.FC<SelectFieldProps> = ({
     </Select>
   );
 };
+
 
 export { SelectField, selectVariants };
