@@ -41,7 +41,8 @@ export function Sidebar() {
         <hr className="mx-4" />
         <Menu isOpen={getOpenState()} />
         {isOpen && (
-          <div className="flex gap-4 mx-4 py-2 mb-4  flex-col">
+          <div className="flex gap-4 mx-
+          4 py-2 mb-4  flex-col">
             <hr />
             <div className="flex gap-4 flex-col px-4">
               <span className="text-slate text-sm">
