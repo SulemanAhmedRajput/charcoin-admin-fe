@@ -25,7 +25,7 @@ export function rgbaToHex(rgba: string): string {
   const match = rgba.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
   if (!match) return "#000000"; // Default to black if invalid
 
-  const [_, r, g, b, a] = match; // Extract values as strings
+  let [_, r, g, b, a] = match; // Extract values as strings
   r = parseInt(r).toString(16).padStart(2, "0");
   g = parseInt(g).toString(16).padStart(2, "0");
   b = parseInt(b).toString(16).padStart(2, "0");
