@@ -8,6 +8,7 @@ import localFont from "next/font/local";
 import { Suspense } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
+import Head from "next/head";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -132,6 +133,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+        <Head>
+        <meta name="theme-color" content="#00f0b5" />
+        <meta property="og:title" content="Charcoin – Invest with Impact" />
+        <meta property="og:description" content="Join the global movement of crypto-driven generosity. Track donations, support causes, and make your tokens count." />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} ${wfVisualSans.className} antialiased`}
       >

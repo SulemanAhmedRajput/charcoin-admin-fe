@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 
 import { AdminLoginForm } from "@/components/form/admin-login-form";
+import Video from "next-video";
 import { Button } from "@/components/ui/button";
 
 const LoginPage = () => {
@@ -11,7 +12,9 @@ const LoginPage = () => {
         <Button variant={"newly_secondary"} className="font-bold">
           <ArrowLeft />
           Back
+          
         </Button>
+        <Video src={"http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"} />
         <div className="flex flex-col  max-w-sm gap-4 mx-auto justify-center  h-5/6 mt-4 ">
           <Image
             src={"/logo.svg"}
