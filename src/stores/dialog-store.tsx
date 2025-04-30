@@ -15,6 +15,8 @@ interface DialogState {
   | "edit_category"
   | "add_campaign"
   | "edit_campaign"
+  | "wallet_setting_open_existing"
+  | "wallet_setting_add_new"
   | null;
 
   openDetail: () => void;
@@ -37,6 +39,9 @@ interface DialogState {
   setEditCategory: (isOpen: boolean) => void;
   setAddCampaign: (isOpen: boolean) => void;
   setEditCampaign: (isOpen: boolean) => void;
+  // Wallet Setting
+  setWalletSettingOpenExisting: (isOpen: boolean) => void;
+  setWalletSettingAddNew: (isOpen: boolean) => void;
 }
 
 const useDialogStore = create<DialogState>((set) => ({
@@ -76,6 +81,11 @@ const useDialogStore = create<DialogState>((set) => ({
     set({ openDialog: isOpen ? "add_campaign" : null }),
   setEditCampaign: (isOpen) =>
     set({ openDialog: isOpen ? "edit_campaign" : null }),
+  // Wallet Setting
+  setWalletSettingOpenExisting: (isOpen) =>
+    set({ openDialog: isOpen ? "wallet_setting_open_existing" : null }),
+  setWalletSettingAddNew: (isOpen) => 
+    set({ openDialog: isOpen ? "wallet_setting_add_new" : null }),
 
 }));
 
